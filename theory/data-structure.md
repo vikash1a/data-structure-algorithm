@@ -63,15 +63,19 @@
  1. Based on red lack tree ( balanced binary tree)  
  2. Multiset - duplicate value can be stored
 ## Heaps
-
  1. Syntax  
-    1. priority_queue<int> -max heap first element largest, priority_queue<int,vector<int>, greater<int>,> - min heap, first element smallest  
-    2. Push, pop,top,size,empty,swap  
-    3. Heapify - check later, logic understood , practice remaining - done  
-    4. Custom comparator for priority queue  
- 2. Time complexity  
+   ```
+   priority_queue<int> -max heap first element largest
+   priority_queue<int,vector<int>, greater<int>,> - min heap, first element smallest 
+
+   Push, pop,top,size,empty,swap  
+   ```
+ 2. Heapify 
+ 3. Custom comparator for priority queue  
+ 4. Can have duplicates
+ 5. Time complexity  
     1.  Insert,delete - o(log(n)), peek - O(1)  
- 3. Binary Heap  
+ 6. Binary Heap  
     1. Complete binary tree - all position filled from left
 ## Binary Tree
 
