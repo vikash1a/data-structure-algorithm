@@ -18,16 +18,16 @@
 - Optimum jump size minimum value of n/m+(m-1) => sqrt(m)
 - O( sqrt(n)) for sorted array
 
-## Interpolation search - check again
+## Interpolation search
 
 - Best - o(log(logn))
 - Worse - o(n)
 
-## Exponential search	- check again
+## Exponential search	
 
 - o(logn)
 
-## Sublist search	- check again
+## Sublist search	
 
 - O (mn)
 - Rest skipped

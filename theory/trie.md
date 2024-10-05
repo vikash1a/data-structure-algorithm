@@ -26,3 +26,6 @@ TC - O(world length)
 ### Search 
 TC - O(world length)
 ![](./media/trie-search.png)
+
+### Source
+[Striver Trie Playlist](https://www.youtube.com/watch?v=RV0QeTyHZxo&list=PLgUwDviBIf0pcIDCZnxhv0LkHf5KzG9zp&index=4)
