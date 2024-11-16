@@ -1,0 +1,23 @@
+- [Searching Algo](/theory/search-algo.md)
+- [Sorting Algo](/theory/search-algo.md#sorting-algo)
+- [Data Structures - I ](/theory/data-structure.md#data-structures)
+  - [Arrays](/theory/data-structure.md#arrays)
+  - [Linked List](/theory/data-structure.md#linked-list)
+  - [Strings](/theory/data-structure.md#strings)
+  - [Stack](/theory/data-structure.md#stack)
+  - [Queues](/theory/data-structure.md#queues)
+  - [Hashing](/theory/data-structure.md#hashing)
+  - [Maps  (map, set)](/theory/data-structure.md#maps--map-set)
+  - [Heaps](/theory/data-structure.md#heaps)
+- Data Structures - II
+  - [Tree](/theory/tree.md)
+  - [Binary Search Tree](/theory/binary-search-tree.md)
+  - [Graph](/theory/graph.md)
+- Algo - I
+  - [Backtracking](/theory/backtracking.md)
+  - [Greedy](/theory/graph.md)
+- Algo - II
+  - [Bit Manipulation](/theory/bit-manipulation.md)
+  - [Trie](/theory/trie.md)
+- Other
+  - [other notes](/theory/other-notes.md)
