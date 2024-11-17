@@ -16,6 +16,7 @@
 - Algo - I
   - [Backtracking](/theory/backtracking.md)
   - [Greedy](/theory/graph.md)
+  - [DP](/theory/dp.md)
 - Algo - II
   - [Bit Manipulation](/theory/bit-manipulation.md)
   - [Trie](/theory/trie.md)
