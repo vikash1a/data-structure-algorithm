@@ -1,58 +1,32 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+//gfg using BFS
+vector<int> topologicalSortBfs(vector<vector<int>> vvg, int nv){
+    vector<int> inOrder(nv+1, 0);
+    for(int i=0;i<=nv; i++){
+        for(int j=0;j<=(int)vvg[i].size()-1; j++){
+            inOrder[vvg[i][j]]+=1;
+        }
+    }
+    queue<int> qu;
+    for(int i=0;i<=nv; i++){
+        if(inOrder[i]==0)qu.push(i);
+    }
+    vector<int> topologicalOrder;
+    while(!qu.empty()){
+        int front = qu.front();
+        qu.pop();
+        topologicalOrder.push_back(front);
+        for(int i=0;i<=(int)vvg[front].size()-1;i++){
+            inOrder[vvg[front][i]]--;
+            if(inOrder[vvg[front][i]] == 0)qu.push(vvg[front][i]);
+        }
+    }
+    return topologicalOrder;
+}
 
-//self tried
-// void topologicalSortingUtil(vector<vector<int>> vvg, vector<vector<int>> vvgReverse,
-//     vector<bool> &visited, int k, vector<int>& ans,vector<bool> &recStack)
-//     {
-    
-//     if(visited[k]) return;
-//     else{
-//         recStack[k] = true;
-//         for(int i=0;i<=vvgReverse[k].size()-1;i++){
-//             if(!visited[vvgReverse[k][i]] && !recStack[vvgReverse[k][i]]){
-//                 topologicalSortingUtil(vvg,vvgReverse,visited,vvgReverse[k][i],ans,recStack);
-//             }
-//         }
-//         ans.push_back(k);
-//         visited[k] = true;
-//         recStack[k] = false;
-
-//         for(int i=0;i<=vvg[k].size()-1;i++){
-//             if(!visited[vvg[k][i]] && !recStack[vvg[k][i]]){
-//                 topologicalSortingUtil(vvg,vvgReverse,visited,vvg[k][i],ans,recStack);
-//             }
-//         }
-//     }
-
-//     return;
-// }
-
-// vector<int> topologicalSorting(vector<vector<int>> vvg){
-//     int nv = vvg.size()-1;
-//     vector<vector<int>> vvgReverse(nv+1);
-//     for(int i=0;i<=nv;i++){
-//         cout<<i<<endl;
-//         if(vvg[i].size()==0)continue;
-//         for(int j=0;j<=vvg[i].size()-1;j++){
-//             cout<<j<<"-"<<endl;
-//             vvgReverse[vvg[i][j]].push_back(i);
-//             // cout<<i<<" "<<j<<" "<<vvg[i][j]<<endl;
-//             // cout<<"t";
-//         }
-        
-//     }
-//     cout<<"test";
-//     vector<bool> visited(nv+1,false);
-//     vector<bool> recStack(nv+1,false);
-//     vector<int> ans;
-//     topologicalSortingUtil(vvg,vvgReverse,visited,0,ans,recStack);
-
-//     return ans;
-// }
-
-//gfg
+//gfg using DFS
 
 void topologicalSortUtil(vector<vector<int>> vvg, vector<bool>& visited,stack<int>& st,int k){
     visited[k] = true;
@@ -95,7 +69,7 @@ int main(){
     vvg.push_back({0,1});
     vvg.push_back({0,2});
 
-    vector<int> v = topologicalSort(vvg,5);
+    vector<int> v = topologicalSortBfs(vvg,5);
     cout<<"topological Sorting :-\n";
     for(int i:v){
         cout<<i<<" ";

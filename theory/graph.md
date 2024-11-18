@@ -91,9 +91,12 @@ Detect cycle in directed graph
   If any of the functions returns true , stop the future function calls and return true as the answer.  
 ```
 
-#### Using BFS - Skipped
+#### Using BFS 
+Using Kahn's algorithm modifcation. Maintain count of processed node, if processed node count is not equal to no of vertices then cycle is present. 
 
 ### Topological sorting
+Topological Sorting of a directed graph is a linear ordering of its vertices such that for every directed edge 
+𝑢→𝑣, vertex u comes before v in the ordering. It applies only to Directed Acyclic Graphs (DAGs).
 #### Directed acyclic graph (DAGs)  
 ##### Using stack and visited, and dfs  
        Create a graph with n vertices and m-directed edges.  
@@ -108,7 +111,15 @@ Detect cycle in directed graph
        After all, vertices have been visited, pop elements from the stack and append them to the output list until the stack is empty.  
 
        The resulting list is the topologically sorted order of the graph.  
-##### Using BFS - Skipped
+##### Using BFS (Kahn's algorithm)
+
+- Calculate In-Degree: Compute the in-degree of each vertex.
+- Enqueue Nodes with Zero In-Degree: Start with nodes that have no incoming edges.
+- Process the Queue:
+  - Remove a node from the queue and add it to the topological ordering.
+  - Reduce the in-degree of its neighbors by 1.
+  - If any neighbor's in-degree becomes zero, enqueue it.
+- Repeat until the queue is empty.
 
 ### Minimum Spanning tree
 Definition  
