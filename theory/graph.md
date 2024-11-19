@@ -125,9 +125,21 @@ Topological Sorting of a directed graph is a linear ordering of its vertices suc
 Definition  
 - Graph - weighted and undirected and connected  
 - Spanning Tree Definition -  Convert graph to tree with n vertices and n-1 edges and all nodes are reachable from each other  
-- Minimum Spanning Tree Definition - Cumulative weight should be minimum  
+- Minimum Spanning Tree Definition - **Cumulative weight should be minimum**
+- ![image](./media/graph-mst.png)
 
-Prim’s Algo   
+#### Prim’s Algo   
+Steps:
+- Initialize:
+  - Choose any starting vertex.
+  - Create a priority queue to store edges with their weights.
+  - Cretae a visited array for vertex
+- Repeat until all vertices are included:
+  - Pick the edge with lowest weight from the priority queue.
+  - Add this edge to the MST if not already included.
+  - Add all edges from this new vertex to the priority queue.
+- Stop when the MST contains V−1 edges (V is the number of vertices).
+
 Kruskal algo & Union Find ❎
 
 ### Backtracking
