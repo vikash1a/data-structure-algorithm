@@ -140,7 +140,7 @@ Steps:
   - Add all edges from this new vertex to the priority queue.
 - Stop when the MST contains V−1 edges (V is the number of vertices).
 
-Kruskal algo & Union Find ❎
+#### Kruskal algo & Union Find ❎
 
 ### Backtracking
 Find if there is a path of more than k length from a source   
