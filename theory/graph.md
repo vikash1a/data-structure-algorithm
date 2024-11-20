@@ -140,7 +140,22 @@ Steps:
   - Add all edges from this new vertex to the priority queue.
 - Stop when the MST contains V−1 edges (V is the number of vertices).
 
-#### Kruskal algo & Union Find ❎
+#### Union Find, Disjoint Set
+- Find:
+   - Determines which set a particular element belongs to.
+   - Uses path compression to make future queries faster by flattening the tree structure.
+- Union:
+   - Merges two sets into one.
+   - Uses union by rank (or size) to keep the structure balanced, minimizing tree height.
+ - Time complexity - O(alpha(n)) ~ conatant time complexity
+
+#### Kruskal algo
+- Sort all edges in non-decreasing order of their weights.
+- Initialize the MST as an empty set.
+- Iterate through the sorted edges:
+  - If the edge connects two nodes that are not already in the same connected component (cycle check), add it to the MST.
+  - Use the Union-Find data structure to manage the connected components.
+- Stop when the MST contains n−1 edges, where n is the number of vertices in the graph.
 
 ### Backtracking
 Find if there is a path of more than k length from a source   
