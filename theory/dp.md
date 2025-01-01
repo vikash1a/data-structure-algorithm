@@ -1,0 +1,3 @@
+- Memorization - Bottom down
+- Tabulation - Bottom up
+- Space Optimisation 

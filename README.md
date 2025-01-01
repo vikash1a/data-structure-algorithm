@@ -4,3 +4,4 @@
 To Do
  - [ ] https://www.geeksforgeeks.org/kmp-algorithm-for-pattern-searching/ 
  - Sweeping Line Algorithm 
+ - Kadane algo
