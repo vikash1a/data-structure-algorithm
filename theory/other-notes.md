@@ -39,22 +39,22 @@
         return 0;
     }
 ```
-## DS Comaprison
+## DS Comparison
 
 
-| C++                                                      | C#                                       | Java                                          | Kotlin                                   |
-| :------------------------------------------------------- | :--------------------------------------- | :-------------------------------------------- | ---------------------------------------- |
-| vector<int>, push_back,size,pop_back                     | List<int> , add,count,list.sort(),       | ArrayList<int> , add, get, set                | List<int>, MutableList<int>,add, remove, |
-| Linked list- custom, list stl                            | Linkedlist<t>                            | LinkedList, addFirst, addLast                 | use java                                 |
-| Strings                                                  | string                                   | string                                        | string                                   |
-| Stacks ,st.push(a),st.pop(),st.top()st.size(),st.empty() | Stack, push(), pop(),peek()              | Stack, push,pop,isEmpty                       | use java                                 |
-| Queues,q.push(a),q.front(),q.back(),q.pop(),size,empty   | Queue, enqueue, dequeue, peek            | LinkedList                                    | use java                                 |
-| Hashing- unordered_set, unorderer_map                    | Hashset- Add ,remove, dictionoary        | HashSet,add,contains,remove                   | HashSet,add,contains,remove              |
-| Maps- map, set                                           | Sortedset- Add ,remove, sortedDictionary | HashMap<int,int> hm, hm.put(“1”,”2”),get      | HashMap<int,int> hm, hm.put(“1”,”2”),get |
-| Heap- priority queue                                     | Priority queue- check later              | PriorityQueue<Int>()   , add , poll, peek     | use java                                 |
-| tree                                                     |                                          |                                               |
-| graph                                                    |                                          |                                               |
-| cout<<” “<<endl; cin>>endl;                              | Console.writeLine();Console.ReadLine()   | System.out.println(); new Scanner(System.in); | println() readLine()                     |
+| C++                                                      | Java                                          | Kotlin                                   |
+| :------------------------------------------------------- | :-------------------------------------------- | ---------------------------------------- |
+| vector<int>, push_back,size,pop_back                     | ArrayList<int> , add, get, set                | List<int>, MutableList<int>,add, remove, |
+| Linked list- custom, list stl                            | LinkedList, addFirst, addLast                 | use java                                 |
+| Strings                                                  | string                                        | string                                   |
+| Stacks ,st.push(a),st.pop(),st.top()st.size(),st.empty() | Stack, push,pop,isEmpty                       | use java                                 |
+| Queues,q.push(a),q.front(),q.back(),q.pop(),size,empty   | LinkedList                                    | use java                                 |
+| Hashing- unordered_set, unorderer_map                    | HashSet,add,contains,remove                   | HashSet,add,contains,remove              |
+| Maps- map, set                                           | HashMap<int,int> hm, hm.put(“1”,”2”),get      | HashMap<int,int> hm, hm.put(“1”,”2”),get |
+| Heap- priority queue                                     | PriorityQueue<Int>()   , add , poll, peek     | use java                                 |
+| tree                                                     |                                               |
+| graph                                                    |                                               |
+| cout<<” “<<endl; cin>>endl;                              | System.out.println(); new Scanner(System.in); | println() readLine()                     |
 
 ## C++ data type size
 

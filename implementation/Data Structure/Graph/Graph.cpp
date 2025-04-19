@@ -160,8 +160,8 @@ class Graph{
 
         //detect cycle in directed graph using BFS
         //tc - o(v+e), sc - O(v+e)
-        bool detectCycleDirectedBfs(vector<vector<int>> adj){
-            int nv = adj.size()-1;
+        bool detectCycleDirectedBfs(vector<vector<int>> vvg){
+            int nv = vvg.size()-1;
             vector<int> inOrder(nv+1, 0);
             for(int i=0;i<=nv; i++){
                 for(int j=0;j<=(int)vvg[i].size()-1; j++){
