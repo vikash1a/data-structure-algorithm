@@ -78,3 +78,44 @@ Unorderd_set, Unorederd_map
    Insert,delete - o(log(n)), peek - O(1)  
 - Binary Heap  
     Complete binary tree - all position filled from left
+- Example
+```
+Max Heapify Process on [3, 1, 2, 4]
+
+Initial Tree (Array: [3, 1, 2, 4])
+----------------------------------
+        3
+       / \
+      1   2
+     /
+    4
+
+Step 1: Heapify at index 1 (Swap 1 with 4)
+------------------------------------------
+        3
+       / \
+     [4]  2
+     /
+[1]
+
+Array: [3, 4, 2, 1]
+
+Step 2: Heapify at index 0 (Swap 3 with 4)
+------------------------------------------
+       [4]
+       / \
+     [3]  2
+     /
+    1
+
+Array: [4, 3, 2, 1]
+
+Final Max Heap Tree (Array: [4, 3, 2, 1])
+------------------------------------------
+        4
+       / \
+      3   2
+     /
+    1
+
+```
