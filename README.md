@@ -8,4 +8,4 @@
  - [ ] Practice c++ list stl 
 
 ### Problem Solving learning
- - [ ] binary search in c++, lower_bound & upper_bound [reference](https://leetcode.com/problems/most-profit-assigning-work/solutions/5328902/most-profit-assigning-work/)
+ - [X] binary search in c++, lower_bound & upper_bound [reference](https://leetcode.com/problems/most-profit-assigning-work/solutions/5328902/most-profit-assigning-work/)
