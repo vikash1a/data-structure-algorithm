@@ -3,3 +3,13 @@
 bin/
 obj/
 .DS_Store
+.idea/
+
+# Object files
+*.o
+*.obj
+
+# Executables
+*.exe
+*.out
+*.app
