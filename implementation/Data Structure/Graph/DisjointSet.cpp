@@ -26,13 +26,13 @@ class DisjointSet{
         int pv = find(v);
         if(pu == pv)return;
         if(rank[pu] < rank[pv]){
-            parent[pu] = parent[pv];
+            parent[pu] = pv;
         }
         else if(rank[pu] > rank[pv]){
-            parent[pv] = parent[pu];
+            parent[pv] = pu;
         }
         else{
-            parent[pv] = parent[pu];
+            parent[pv] = pu;
             rank[pv]+=1;
         }
     }
