@@ -13,7 +13,7 @@ class DisjointSet{
             parent[i] = i;
         }
     }
-
+    // path compression
     int find(int x){
         if(x != parent[x]){
             parent[x] = find(parent[x]);

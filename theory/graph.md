@@ -148,6 +148,16 @@ Steps:
    - Merges two sets into one.
    - Uses union by rank (or size) to keep the structure balanced, minimizing tree height.
  - Time complexity - O(alpha(n)) ~ conatant time complexity
+ - Algo
+ ```
+intialise two array
+  rank as 0
+  parent as i
+Now for each edge
+  find their ultimate parent
+  make lower rank as parent and higher one as child
+  if equal rank - make either parent, and increment rank 
+ ```
 
 #### Kruskal algo
 - Sort all edges in non-decreasing order of their weights.

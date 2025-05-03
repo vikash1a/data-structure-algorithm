@@ -1,0 +1,16 @@
+## Graph
+- DFS
+- BFS
+- Cycle (undirected, directed)
+- Topological Sorting
+- MST
+  - Prims
+  - Union & Disjont set
+  - Kruskal
+- Shortest Path
+  - Dikshtra
+  - bellman ford
+  - floyd marshal
+- Connectivity
+  - If two node is connected
+  - Strongly connected (Kosaraju algo)
