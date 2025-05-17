@@ -195,7 +195,7 @@ Algo
     if(dist[u]+w<dist[v]) => dist[v] = dist[u]+w  
   TC - O(ve), sc- o(v)  
 ```
-#### Floyd Marshal 
+#### Floyd Warshal 
 
 - To find shortest distance between every poor  
 - Tc- O(n^3)  
