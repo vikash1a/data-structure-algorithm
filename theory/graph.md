@@ -195,11 +195,22 @@ Algo
     if(dist[u]+w<dist[v]) => dist[v] = dist[u]+w  
   TC - O(ve), sc- o(v)  
 ```
-#### Floyd Marshal ❎  
+#### Floyd Marshal 
+
+- To find shortest distance between every poor  
+- Tc- O(n^3)  
+- 🧠 Algorithm Logic
+  - For every pair (i, j), and every possible intermediate vertex k, check if going from i → k → j is shorter than the current i → j.
+
+- Pseudocode:
 ```
-To find shortest distance between every poor  
-Tc- O(n^3)  
-Revise algo
+
+for k in 0 to V-1:
+    for i in 0 to V-1:
+        for j in 0 to V-1:
+            if dist[i][j] > dist[i][k] + dist[k][j]:
+                dist[i][j] = dist[i][k] + dist[k][j]
+
 ```
 
 ### Connectivity
