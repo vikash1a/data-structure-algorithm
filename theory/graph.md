@@ -172,6 +172,12 @@ Find if there is a path of more than k length from a source
 Implementation pending ❎
 
 ### Shortest path
+
+#### BFS (Only for undirected graph)
+- only for undirected graph
+- Usual BFS
+- Maintain a parent array for re-constructing path 
+
 #### Dijkstra algo  
 ```
 Tc - o(v^2)  
