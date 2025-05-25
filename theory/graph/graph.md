@@ -177,6 +177,13 @@ Implementation pending ❎
 - only for undirected graph
 - Usual BFS
 - Maintain a parent array for re-constructing path 
+- [solution]('implementation/Data Structure/Graph/shortest-path-undirected.cpp')
+
+#### 0 1 BFS for directed
+- shortest path for directed graph with edges having two possible values 0,1
+- use dequeue instead of priority queue 
+- TC O(V+E)
+- Can be used for grid based problem 
 
 #### Dijkstra algo  
 ```
