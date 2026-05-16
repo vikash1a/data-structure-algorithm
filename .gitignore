@@ -14,8 +14,12 @@
 # Compiled C++ binaries (add new ones here as you create .cpp files)
 cpp-playground
 scratch/playground
-implementation/bit-manipulation/bit-manipulation
-implementation/binary-search/binary-search
+implementation/bit-manipulation
+implementation/binary-search
+implementation/heap
+implementation/linked-list
+implementation/stack
+implementation/trie
 implementation/sorting/heap-sort
 implementation/sorting/merge-sort
 implementation/sorting/quick-sort
@@ -27,9 +31,5 @@ implementation/graph/kruskal
 implementation/graph/prims
 implementation/graph/topological-sorting
 implementation/graph/shortest-path-undirected
-implementation/heap/heap
-implementation/linked-list/linked-list
-implementation/stack/stack
 implementation/tree/binary-tree
 implementation/tree/bst
-implementation/trie/trie

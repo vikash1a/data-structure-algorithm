@@ -8,15 +8,15 @@
 ```
 .
 ├── implementation/          # C++ implementations by topic
-│   ├── binary-search/
-│   ├── bit-manipulation/
-│   ├── graph/               # graph, dijkstra, kruskal, prims, floyd-marshall, etc.
-│   ├── heap/
-│   ├── linked-list/
+│   ├── binary-search.cpp
+│   ├── bit-manipulation.cpp
+│   ├── heap.cpp
+│   ├── linked-list.cpp
+│   ├── stack.cpp
+│   ├── trie.cpp
+│   ├── graph/               # dijkstra, kruskal, prims, floyd-marshall, etc.
 │   ├── sorting/             # merge-sort, quick-sort, heap-sort
-│   ├── stack/
-│   ├── tree/                # binary-tree, bst
-│   └── trie/
+│   └── tree/                # binary-tree, bst
 │
 ├── theory/                  # Notes and explanations by topic
 │   ├── backtracking.md
