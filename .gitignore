@@ -1,7 +1,3 @@
-.exe
-.dSYM
-bin/
-obj/
 .DS_Store
 .idea/
 
@@ -14,3 +10,26 @@ obj/
 *.out
 *.app
 *.dSYM/
+
+# Compiled C++ binaries (add new ones here as you create .cpp files)
+cpp-playground
+scratch/playground
+implementation/bit-manipulation/bit-manipulation
+implementation/binary-search/binary-search
+implementation/sorting/heap-sort
+implementation/sorting/merge-sort
+implementation/sorting/quick-sort
+implementation/graph/graph
+implementation/graph/dijkstra
+implementation/graph/disjoint-set
+implementation/graph/floyd-marshall
+implementation/graph/kruskal
+implementation/graph/prims
+implementation/graph/topological-sorting
+implementation/graph/shortest-path-undirected
+implementation/heap/heap
+implementation/linked-list/linked-list
+implementation/stack/stack
+implementation/tree/binary-tree
+implementation/tree/bst
+implementation/trie/trie
