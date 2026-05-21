@@ -1,3 +1,25 @@
+```mermaid
+mindmap
+  root((DSA))
+    Searching & Sorting
+      Searching
+      Sorting
+    Data Structures I
+      Arrays / Strings
+      Stack / Queue
+      Hashing / Maps
+      Heap
+    Data Structures II
+      Tree / BST
+      Graph
+      Trie
+    Algorithms
+      Backtracking
+      Greedy
+      DP
+      Bit Manipulation
+```
+
 - [Searching Algo](/theory/01-searching/01-search-algo.md)
 - [Sorting Algo](/theory/02-sorting/01-sort-algo.md)
 - [Data Structures - I](/theory/03-data-structures-1/01-data-structure.md#data-structures)
