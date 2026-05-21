@@ -19,21 +19,29 @@
 │   └── tree/                # binary-tree, bst
 │
 ├── theory/                  # Notes and explanations by topic
-│   ├── backtracking.md
-│   ├── binary-search-tree.md
-│   ├── bit-manipulation.md
-│   ├── cpp-stl.md
-│   ├── data-structure.md
-│   ├── dp.md
-│   ├── graph.md
-│   ├── greedy.md
-│   ├── moore-voting-algo.md
-│   ├── other-notes.md
-│   ├── patterns.md
-│   ├── search-algo.md
-│   ├── sort-algo.md
-│   ├── tree.md
-│   ├── trie.md
+│   ├── 01-searching/
+│   │   └── 01-search-algo.md
+│   ├── 02-sorting/
+│   │   └── 01-sort-algo.md
+│   ├── 03-data-structures-1/
+│   │   └── 01-data-structure.md
+│   ├── 04-data-structures-2/
+│   │   ├── 01-tree.md
+│   │   ├── 02-binary-search-tree.md
+│   │   ├── 03-graph.md
+│   │   └── 04-trie.md
+│   ├── 05-algo-1/
+│   │   ├── 01-backtracking.md
+│   │   ├── 02-greedy.md
+│   │   └── 03-dp.md
+│   ├── 06-algo-2/
+│   │   ├── 01-bit-manipulation.md
+│   │   └── 02-moore-voting-algo.md
+│   ├── 07-patterns/
+│   │   └── 01-patterns.md
+│   ├── 08-other/
+│   │   ├── 01-cpp-stl.md
+│   │   └── 02-other-notes.md
 │   └── media/               # Images referenced by notes
 │
 ├── problems/                # Practice problems by topic
