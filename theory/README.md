@@ -8,7 +8,7 @@
   - [Queues](/theory/03-data-structures-1/01-data-structure.md#queues)
   - [Hashing](/theory/03-data-structures-1/01-data-structure.md#hashing)
   - [Maps  (map, set)](/theory/03-data-structures-1/01-data-structure.md#maps--map-set)
-  - [Heaps](/theory/03-data-structures-1/01-data-structure.md#heaps)
+  - [Heap](/theory/03-data-structures-1/02-heap.md)
 - [Data Structures - II](/theory/04-data-structures-2/)
   - [Tree](/theory/04-data-structures-2/01-tree.md)
   - [Binary Search Tree](/theory/04-data-structures-2/02-binary-search-tree.md)

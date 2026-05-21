@@ -1,145 +1,142 @@
-
 # Data Structures
 
+| Structure      | Access   | Search   | Insert   | Delete   | Space |
+|----------------|----------|----------|----------|----------|-------|
+| Array          | O(1)     | O(n)     | O(n)     | O(n)     | O(n)  |
+| Linked List    | O(n)     | O(n)     | O(1)     | O(1)     | O(n)  |
+| Stack          | O(n)     | O(n)     | O(1)     | O(1)     | O(n)  |
+| Queue          | O(n)     | O(n)     | O(1)     | O(1)     | O(n)  |
+| Hash Map       | O(1) avg | O(1) avg | O(1) avg | O(1) avg | O(n)  |
+| Map / Set      | O(log n) | O(log n) | O(log n) | O(log n) | O(n)  |
+
+---
+
 ## Arrays
+
+Contiguous block of memory. Random access in O(1) via index.
+
+```mermaid
+flowchart LR
+    a["[0] 10"] --- b["[1] 30"] --- c["[2] 20"] --- d["[3] 50"] --- e["[4] 40"]
 ```
-Pointers
-    Int var = 10;
-    Int *ptr = &var;
-    Var -10, ptr - 100, *ptr  = 10;
-```
+
 ```cpp
-vector<int> v = vector<int>(10,0);
-push_back(), pop_back()
-v[1]
+vector<int> v(10, 0);   // size 10, all zeros
+v.push_back(1);
+v.pop_back();
+v[i];
 sort(v.begin(), v.end());
 ```
 
-## Linked List
-- STL
-  - list<T> -> front(),back(),push_back(),push_front()
-- Definition
+**Pointers (C++):**
+
 ```cpp
-    class node{
-        int val;
-        node *next;
-        Node(int x){
-            Val = x; 
-        }
-    };
+int var = 10;
+int *ptr = &var;  // ptr holds address of var
+// var=10, ptr=<address>, *ptr=10
 ```
-   
-- Doubly linked list - Practice done
-- Floyd Cycle Finding Algo 
-    https://www.geeksforgeeks.org/floyds-cycle-finding-algorithm/
 
-## String
-- Find
-  - s.find(string delim, start) => returns starting index of delim if not found returns -1
-- SubString
-  - string substr (size_t pos, size_t len) 
+---
 
-## Stack 
-    Syntax   
-        Stack <dt> st;  
-        st.push(a),st.pop(),st.top(),st.size(),st.empty()  
+## Linked List
 
-    Design and Implementation  
-        Implement queue using stack - sl  
-            Enqueue or dequeu has to be o(n)  
-        Design and Implement Special Stack Data Structure | Added Space Optimized Version - not important  
-        Implement two stacks in an array  
-            Create stack from extreme corners   
-        Implement stack using queue  
-            Push or pop has to be o(n)  
+Chain of nodes where each node holds a value and a pointer to the next node.
 
-    Standard Problems on stack  
-        Infix to postfix - check later  
-        Stock span problem - sl, end  
-        Balanced parentheses - sl, end  
-        Next greater element - sl, end  
+```mermaid
+flowchart LR
+    H(["head"]) --> A
+    A["val: 10\nnext: →"] --> B["val: 20\nnext: →"] --> C["val: 30\nnext: null"]
+```
 
-    Operation on stack  
-    Reverse a stack using recursion
+```cpp
+class Node {
+    int val;
+    Node *next;
+    Node(int x) : val(x), next(nullptr) {}
+};
+```
+
+- **STL:** `list<T>` — `front()`, `back()`, `push_back()`, `push_front()`
+- **Doubly linked list:** each node has `prev` and `next` pointers
+- **Floyd's Cycle Detection:** use slow/fast pointers to detect a cycle in O(n) time, O(1) space — [reference](https://www.geeksforgeeks.org/floyds-cycle-finding-algorithm/)
+
+---
+
+## Strings
+
+```cpp
+s.find(delim, start);        // returns start index of delim, or string::npos if not found
+s.substr(pos, len);          // returns substring of length len starting at pos
+```
+
+---
+
+## Stack
+
+LIFO — last in, first out. Used for recursion, undo operations, expression parsing.
+
+```mermaid
+flowchart LR
+    push["push(40)"] -->|"add to top"| S["top → 40\n30\n20\n10"]
+    S -->|"pop()"| ret["returns 40"]
+```
+
+**STL:** `stack<T>` — `push()`, `pop()`, `top()`, `size()`, `empty()`
+
+**Key problems:**
+- Implement queue using two stacks — enqueue or dequeue costs O(n)
+- Implement stack using two queues — push or pop costs O(n)
+- Infix to postfix conversion
+- Stock span problem
+- Balanced parentheses
+- Next greater element
+
+---
 
 ## Queues
-    queue<dt>;  
-    q.push(a),q.front(),q.back(),q.pop(),size,empty  
-    Deque   
-    Push_back, pop_back, push_front, pop_front
+
+FIFO — first in, first out. Used for BFS, scheduling, buffers.
+
+```mermaid
+flowchart LR
+    push["push(40)"] -->|"enqueue at back"| Q["front: 10 → 20 → 30 → 40 :back"]
+    Q -->|"pop() dequeue from front"| ret["returns 10"]
+```
+
+**STL:** `queue<T>` — `push()`, `pop()`, `front()`, `back()`, `size()`, `empty()`
+
+**Deque:** `deque<T>` — supports `push_back()`, `pop_back()`, `push_front()`, `pop_front()`
+
+---
 
 ## Hashing
-unordered_set, unordered_map
-- insert, find, erase
 
-## Maps  (map, set)
-- Based on red lack tree (balanced binary tree)  
-  - insert, find, erase
-- Multiset - duplicate value can be stored
-  
-## Heaps
-- Syntax  
-   ```
-   priority_queue<int> -max heap first element largest
-   priority_queue<int,vector<int>, greater<int>,> - min heap, first element smallest 
+Provides average O(1) insert, lookup, and delete using a hash function.
 
-   Push, pop,top,size,empty,swap  
-   ```
-- Heapify algo
-- Custom comparator for priority queue 
 ```cpp
-bool compare(int a, int b) {
-    return a > b;  // for min-heap
-}
-std::priority_queue<
-        int, 
-        std::vector<int>, 
-        std::function<bool(int, int)>
-    > minHeap(compare);  // Pass the comparator function
+unordered_set<int> s;
+unordered_map<int, int> m;
+
+s.insert(x);  m.insert({k, v});
+s.find(x);    m.find(k);         // returns iterator, check != end()
+s.erase(x);   m.erase(k);
 ```
-- Can have duplicates
-- Time complexity  
-   Insert,delete - o(log(n)), peek - O(1)  
-- Binary Heap  
-    Complete binary tree - all position filled from left
-- Max heapify Example
+
+---
+
+## Maps / Sets
+
+Backed by a red-black tree (self-balancing BST). All operations O(log n). Keys are always sorted.
+
+```cpp
+map<int, int> m;
+set<int> s;
+
+m.insert({k, v});
+s.insert(x);
+m.find(k);    // O(log n)
+m.erase(k);
+
+multiset<int> ms;   // allows duplicate values
 ```
-Max Heapify Process on [3, 1, 2, 4]
 
-Initial Tree (Array: [3, 1, 2, 4])
-----------------------------------
-        3
-       / \
-      1   2
-     /
-    4
-
-Step 1: Heapify at index 1 (Swap 1 with 4)
-------------------------------------------
-        3
-       / \
-     [4]  2
-     /
-[1]
-
-Array: [3, 4, 2, 1]
-
-Step 2: Heapify at index 0 (Swap 3 with 4)
-------------------------------------------
-       [4]
-       / \
-     [3]  2
-     /
-    1
-
-Array: [4, 3, 2, 1]
-
-Final Max Heap Tree (Array: [4, 3, 2, 1])
-------------------------------------------
-        4
-       / \
-      3   2
-     /
-    1
-
-```

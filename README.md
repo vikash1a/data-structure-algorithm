@@ -24,7 +24,8 @@
 │   ├── 02-sorting/
 │   │   └── 01-sort-algo.md
 │   ├── 03-data-structures-1/
-│   │   └── 01-data-structure.md
+│   │   ├── 01-data-structure.md
+│   │   └── 02-heap.md
 │   ├── 04-data-structures-2/
 │   │   ├── 01-tree.md
 │   │   ├── 02-binary-search-tree.md
