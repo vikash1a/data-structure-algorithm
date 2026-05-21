@@ -34,7 +34,11 @@ mindmap
 - [Data Structures - II](/theory/04-data-structures-2/)
   - [Tree](/theory/04-data-structures-2/01-tree.md)
   - [Binary Search Tree](/theory/04-data-structures-2/02-binary-search-tree.md)
-  - [Graph](/theory/04-data-structures-2/03-graph.md)
+  - [Graph](/theory/04-data-structures-2/03-graph/01-graph.md)
+    - [Cycle Detection](/theory/04-data-structures-2/03-graph/02-cycle-detection.md)
+    - [Topological Sort](/theory/04-data-structures-2/03-graph/03-topological-sort.md)
+    - [Shortest Path](/theory/04-data-structures-2/03-graph/04-shortest-path.md)
+    - [MST](/theory/04-data-structures-2/03-graph/05-mst.md)
   - [Trie](/theory/04-data-structures-2/04-trie.md)
 - Algo - I
   - [Backtracking](/theory/05-algo-1/01-backtracking.md)

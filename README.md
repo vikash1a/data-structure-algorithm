@@ -29,7 +29,12 @@
 │   ├── 04-data-structures-2/
 │   │   ├── 01-tree.md
 │   │   ├── 02-binary-search-tree.md
-│   │   ├── 03-graph.md
+│   │   ├── 03-graph/
+│   │   │   ├── 01-graph.md
+│   │   │   ├── 02-cycle-detection.md
+│   │   │   ├── 03-topological-sort.md
+│   │   │   ├── 04-shortest-path.md
+│   │   │   └── 05-mst.md
 │   │   └── 04-trie.md
 │   ├── 05-algo-1/
 │   │   ├── 01-backtracking.md
