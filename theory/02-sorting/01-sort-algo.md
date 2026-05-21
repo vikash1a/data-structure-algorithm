@@ -1,4 +1,4 @@
-# Sorting Algo
+# Sorting Algorithms
 
 | Algorithm      | Best       | Average    | Worst      | Space    | Stable |
 |----------------|------------|------------|------------|----------|--------|
@@ -9,9 +9,9 @@
 | Quick Sort     | O(n log n) | O(n log n) | O(n²)      | O(log n) | No     |
 | Heap Sort      | O(n log n) | O(n log n) | O(n log n) | O(1)     | No     |
 
-## Selection sort
+## Selection Sort
 
-The selection sort algorithm sorts an array by repeatedly finding the minimum element (considering ascending order) from unsorted part and putting it at the beginning
+Repeatedly finds the minimum element from the unsorted portion and swaps it to the front.
 
 ```mermaid
 flowchart LR
@@ -21,28 +21,20 @@ flowchart LR
 ```
 
 ```c++
-void selectionSort(int arr[], int n)  
-{  
-    int i, j, min_idx;  
-
-    // One by one move boundary of unsorted subarray  
-    for (i = 0; i < n-1; i++)  
-    {  
-        // Find the minimum element in unsorted array  
-        min_idx = i;  
-        for (j = i+1; j < n; j++)  
-        if (arr[j] < arr[min_idx])  
-            min_idx = j;  
-
-        // Swap the found minimum element with the first element  
-        swap(&arr[min_idx], &arr[i]);  
-    }  
+void selectionSort(int arr[], int n) {
+    for (int i = 0; i < n - 1; i++) {
+        int min_idx = i;
+        for (int j = i + 1; j < n; j++)
+            if (arr[j] < arr[min_idx])
+                min_idx = j;
+        swap(&arr[min_idx], &arr[i]);
+    }
 }
 ```
 
-## Bubble sort
+## Bubble Sort
 
-Bubble Sort is the simplest sorting algorithm that works by repeatedly swapping the adjacent elements if they are in wrong order.
+Repeatedly swaps adjacent elements that are in the wrong order, bubbling the largest to the end each pass.
 
 ```mermaid
 flowchart LR
@@ -52,22 +44,17 @@ flowchart LR
 ```
 
 ```c++
-// A function to implement bubble sort  
-void bubbleSort(int arr[], int n)  
-{  
-    int i, j;  
-    for (i = 0; i < n-1; i++)    
-      
-    // Last i elements are already in place  
-    for (j = 0; j < n-i-1; j++)  
-        if (arr[j] > arr[j+1])  
-            swap(&arr[j], &arr[j+1]);  
+void bubbleSort(int arr[], int n) {
+    for (int i = 0; i < n - 1; i++)
+        for (int j = 0; j < n - i - 1; j++)
+            if (arr[j] > arr[j + 1])
+                swap(&arr[j], &arr[j + 1]);
 }
 ```
 
-## Insertion sort
+## Insertion Sort
 
-The array is virtually split into a sorted and an unsorted part. Values from the unsorted part are picked and placed at the correct position in the sorted part.
+Builds a sorted prefix one element at a time by inserting each new element into its correct position.
 
 ```mermaid
 flowchart LR
@@ -77,31 +64,23 @@ flowchart LR
     D -->|"insert 2"| E["1 2 3 4 5"]
 ```
 
-Function to sort an array using insertion sort
-
 ```c++
-void insertionSort(int arr[], int n)  
-{  
-    int i, key, j;  
-    for (i = 1; i < n; i++)  
-    {  
-        key = arr[i];  
-        j = i - 1;  
-
-        / Move elements of arr[0..i-1], that are  
-        greater than key, to one position ahead  
-        of their current position /  
-        while (j >= 0 && arr[j] > key)  
-        {  
-            arr[j + 1] = arr[j];  
-            j = j - 1;  
-        }  
-        arr[j + 1] = key;  
-    }  
+void insertionSort(int arr[], int n) {
+    for (int i = 1; i < n; i++) {
+        int key = arr[i];
+        int j = i - 1;
+        while (j >= 0 && arr[j] > key) {
+            arr[j + 1] = arr[j];
+            j--;
+        }
+        arr[j + 1] = key;
+    }
 }
 ```
 
-## Merge sort
+## Merge Sort
+
+Divide and conquer — recursively splits the array in half, sorts each half, then merges them.
 
 ```mermaid
 flowchart TD
@@ -123,11 +102,13 @@ flowchart TD
     J --> K
 ```
 
-Time Compexity - T(n) = 2T(n/2)+Theta(n) => O(nlogn) in all case\
-Space complexity - o(n)\
-[Sorting_Merge_Sort](https://docs.google.com/document/d/1AYbPXgcxxtZ5BUlXsdTIMrCs8uluWQ9NoVdXiWy7DPw/edit) Checkout Merge sort for linked list
+- Time complexity: T(n) = 2T(n/2) + O(n) → O(n log n) in all cases
+- Space complexity: O(n)
+- [Merge Sort for Linked List](https://docs.google.com/document/d/1AYbPXgcxxtZ5BUlXsdTIMrCs8uluWQ9NoVdXiWy7DPw/edit)
 
 ## Quick Sort
+
+Picks a pivot, partitions elements into less-than and greater-than groups, then recurses on each side.
 
 ```mermaid
 flowchart TD
@@ -144,12 +125,12 @@ flowchart TD
     E --> R
 ```
 
-Time complexity , t(n) = t(k)+t(n-k)+theta(n)\
-Avg -nlogn , best - nlogn, worse- n2\
-Pseudo code understood\
-Implementation done
+- Time complexity: T(n) = T(k) + T(n-k) + O(n)
+- Best/avg: O(n log n) — Worst: O(n²) when pivot is always min/max
 
-## Heap sort
+## Heap Sort
+
+Builds a max-heap from the array, then repeatedly extracts the maximum to produce a sorted result.
 
 ```mermaid
 flowchart TD
@@ -165,24 +146,7 @@ flowchart TD
     heap --> extract
 ```
 
-* Do after understanding binary heap data structure
-
-* Time complexity - nlogn
-
-* Insert element in heap - logn
-
-* Delete element ( only topmost can be removed) - logn
-
-* Create heap - nlogn
-
-* Heap sort
-
-  * Create heap
-
-  * Delete all element
-
-* Heapify - O(n)
-
-* <https://www.youtube.com/watch?v=HqPJF2L5h9U>
-
-* Check insertion in heap - bottom up approach - done
+- Heapify: O(n)
+- Insert / delete: O(log n)
+- Overall: O(n log n) in all cases, O(1) space
+- [Video reference](https://www.youtube.com/watch?v=HqPJF2L5h9U)
