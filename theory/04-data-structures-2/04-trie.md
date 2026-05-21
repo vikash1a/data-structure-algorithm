@@ -9,7 +9,7 @@ This data structure is used for optimised search and insertion.
   - m -> total no of word
   - n -> avg length of word
 
-![](./media/trie-ds.png)
+![](../media/trie-ds.png)
 
 ```c++
 class Node{
@@ -21,11 +21,11 @@ class Node{
 
 ### Insertion
 TC - O(world length)
-![](./media/trie-insertion.png)
+![](../media/trie-insertion.png)
 
 ### Search 
 TC - O(world length)
-![](./media/trie-search.png)
+![](../media/trie-search.png)
 
 ### Source
 [Striver Trie Playlist](https://www.youtube.com/watch?v=RV0QeTyHZxo&list=PLgUwDviBIf0pcIDCZnxhv0LkHf5KzG9zp&index=4)

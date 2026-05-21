@@ -2,7 +2,7 @@
 
 ## Class in C++
 
-![image5](./media/image5.png)
+![image5](../media/image5.png)
 
 ```C++
 

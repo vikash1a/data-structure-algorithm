@@ -13,7 +13,7 @@ TC- O(N), sc - o(n)
 
 #### Morris inorder  
 O(n) sc- O(1)  
-![image4](./media/image4.png)
+![image4](../media/image4.png)
  
 ### Properties  
 - Maximum number of nodes at level l is 2l;  

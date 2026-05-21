@@ -126,7 +126,7 @@ Definition
 - Graph - weighted and undirected and connected  
 - Spanning Tree Definition -  Convert graph to tree with n vertices and n-1 edges and all nodes are reachable from each other  
 - Minimum Spanning Tree Definition - **Cumulative weight should be minimum**
-- ![image](./media/graph-mst.png)
+- ![image](../media/graph-mst.png)
 
 #### Prim’s Algo   
 Steps:
