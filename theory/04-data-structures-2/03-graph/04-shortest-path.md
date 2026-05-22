@@ -45,14 +45,42 @@ Useful for **grid-based problems** where moving in some directions is free and o
 
 Greedily picks the unvisited node with the smallest known distance and relaxes its neighbours. Relies on the fact that once a node is popped from the min-heap, its shortest distance is finalised (only works with non-negative weights).
 
+**Graph — source = 0:**
+
 ```mermaid
 flowchart LR
-    A(["0: dist=0"]) -->|"w=4"| B(["1: dist=4"])
-    A -->|"w=2"| C(["2: dist=2"])
-    C -->|"w=1"| D(["3: dist=3"])
-    B -.->|"relaxed: 4>3"| D
-    D -->|"w=5"| E(["4: dist=8"])
+    A((0)) -->|6| B((1))
+    A -->|2| C((2))
+    C -->|1| B
+    B -->|2| D((3))
+    C -->|5| D
 ```
+
+**Key insight — relaxation:** the direct path 0→1 costs 6, but 0→2→1 costs only 3. When we process node 2, we *relax* (improve) dist[1] from 6 down to 3.
+
+```mermaid
+flowchart LR
+    X((0)) -->|"6  ✗"| Y((1))
+    X -->|2| Z((2))
+    Z -->|"1  ✓ total = 3"| Y
+    style Y fill:#9f9
+```
+
+**Step-by-step trace:**
+
+| Step | Pop (dist, node) | Stale? | Relaxations | dist[0..3] |
+|------|-----------------|--------|-------------|------------|
+| Init | — | — | src = 0 | [0, ∞, ∞, ∞] |
+| 1 | **(0, 0)** | no | 1 → 6, 2 → 2 | [0, 6, 2, ∞] |
+| 2 | **(2, 2)** | no | 1 → 3 ✓ (was 6), 3 → 7 | [0, 3, 2, 7] |
+| 3 | **(3, 1)** | no | 3 → 5 ✓ (was 7) | [0, 3, 2, 5] |
+| 4 | **(5, 3)** | no | — | [0, 3, 2, 5] |
+| 5 | **(6, 1)** | yes — d=6 > dist[1]=3, skip | — | [0, 3, 2, 5] |
+| 6 | **(7, 3)** | yes — d=7 > dist[3]=5, skip | — | [0, 3, 2, 5] |
+
+Final shortest distances from node 0: `[0, 3, 2, 5]`
+
+**Why stale entries appear:** when dist[1] is improved from 6 to 3, the old entry `(6, 1)` is still in the heap. The `if d > dist[u]: continue` check discards it safely.
 
 **Algorithm:**
 
@@ -68,8 +96,6 @@ while heap not empty:
             dist[v] = dist[u] + w
             push (dist[v], v) to heap
 ```
-
-**Why relaxation works:** once a node is popped, no shorter path can arrive later (all weights ≥ 0), so its distance is final.
 
 **Time:** O((V+E) log V) with a min-heap
 
