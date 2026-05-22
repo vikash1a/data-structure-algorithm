@@ -39,6 +39,7 @@ mindmap
     - [Topological Sort](/theory/04-data-structures-2/03-graph/03-topological-sort.md)
     - [Shortest Path](/theory/04-data-structures-2/03-graph/04-shortest-path.md)
     - [MST](/theory/04-data-structures-2/03-graph/05-mst.md)
+    - [Kahn's Algorithm](/theory/04-data-structures-2/03-graph/06-kahns-algorithm.md)
   - [Trie](/theory/04-data-structures-2/04-trie.md)
 - Algo - I
   - [Backtracking](/theory/05-algo-1/01-backtracking.md)

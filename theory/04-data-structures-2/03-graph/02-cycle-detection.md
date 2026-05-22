@@ -85,7 +85,33 @@ dfs(node):
 
 ### BFS — Kahn's Algorithm
 
-Run topological sort (Kahn's). If the number of nodes processed is less than V, a cycle is present (some nodes were never enqueued because their in-degree never reached 0).
+Run topological sort (Kahn's). If the number of nodes processed is less than V, a cycle is present — nodes inside the cycle never reach in-degree 0 so they are never enqueued.
+
+**Example — graph with cycle 1→2→3→1:**
+
+```mermaid
+flowchart LR
+    G0((0)) --> G1((1))
+    G1 --> G2((2))
+    G2 --> G3((3))
+    G3 --> G1
+    style G1 fill:#f96
+    style G2 fill:#f96
+    style G3 fill:#f96
+```
+
+```mermaid
+flowchart TD
+    s1["Step 1: compute in-degrees\n0→0  1→2  2→1  3→1"]
+    s2["Step 2: enqueue in-degree 0 nodes\nqueue: [0]"]
+    s3["Step 3: process 0\nreduce in-degree of 1 → in-degree[1]=1\ncount=1  queue: []"]
+    s4["Step 4: queue empty\ncount=1 < V=4"]
+    s5(["Cycle detected ✓\nnodes 1,2,3 never processed"])
+    s1 --> s2 --> s3 --> s4 --> s5
+    style s5 fill:#f96
+```
+
+Nodes 1, 2, 3 keep pointing into each other — their in-degrees never reach 0, so they are stuck and never processed.
 
 ```
 compute in-degree for all nodes

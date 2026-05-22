@@ -34,7 +34,8 @@
 │   │   │   ├── 02-cycle-detection.md
 │   │   │   ├── 03-topological-sort.md
 │   │   │   ├── 04-shortest-path.md
-│   │   │   └── 05-mst.md
+│   │   │   ├── 05-mst.md
+│   │   │   └── 06-kahns-algorithm.md
 │   │   └── 04-trie.md
 │   ├── 05-algo-1/
 │   │   ├── 01-backtracking.md
