@@ -7,152 +7,284 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
 
     :root {
-      --bg: #0d1117;
-      --surface: #161b22;
-      --border: #30363d;
-      --accent: #58a6ff;
-      --text: #c9d1d9;
-      --text-muted: #8b949e;
+      --bg:          #0d1117;
+      --surface:     #161b22;
+      --surface2:    #21262d;
+      --border:      #30363d;
+      --accent:      #58a6ff;
+      --accent-dim:  rgba(88,166,255,0.12);
+      --text:        #c9d1d9;
+      --text-muted:  #8b949e;
+      --sidebar-w:   248px;
+      --topbar-h:    48px;
     }
 
     body {
       background: var(--bg);
       color: var(--text);
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-      line-height: 1.6;
-      padding: 2rem 1rem;
+      overflow: hidden;
     }
 
-    .container { max-width: 900px; margin: 0 auto; }
+    /* ── APP SHELL ── */
+    .app { display: flex; flex-direction: column; height: 100vh; }
 
-    /* ── INDEX ── */
-    #index-view header { margin-bottom: 2.5rem; }
-    #index-view header h1 { font-size: 1.8rem; font-weight: 700; color: #fff; }
-    #index-view header p { color: var(--text-muted); margin-top: 0.4rem; }
-    #index-view header a { color: var(--accent); text-decoration: none; font-size: 0.85rem; }
-    #index-view header a:hover { text-decoration: underline; }
+    .topbar {
+      height: var(--topbar-h);
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      padding: 0 1rem;
+      gap: 0.75rem;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      z-index: 100;
+    }
+    .topbar .site-name {
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: #fff;
+      text-decoration: none;
+      letter-spacing: -0.02em;
+    }
+    .topbar .spacer { flex: 1; }
+    .topbar .gh-link {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .topbar .gh-link:hover { color: var(--accent); }
+
+    .menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--text);
+      font-size: 1.15rem;
+      cursor: pointer;
+      padding: 0.25rem 0.4rem;
+      border-radius: 4px;
+      line-height: 1;
+    }
+    .menu-btn:hover { background: var(--surface2); }
+
+    .app-body {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    /* ── SIDEBAR ── */
+    .sidebar {
+      width: var(--sidebar-w);
+      flex-shrink: 0;
+      overflow-y: auto;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      font-size: 0.82rem;
+    }
+    /* scrollbar */
+    .sidebar::-webkit-scrollbar { width: 4px; }
+    .sidebar::-webkit-scrollbar-track { background: transparent; }
+    .sidebar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+    .overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      top: var(--topbar-h);
+      background: rgba(0,0,0,0.65);
+      z-index: 150;
+    }
+
+    /* ── TREE NAV ── */
+    .tree-list { list-style: none; padding: 0.4rem 0; margin: 0; }
+    .tree-list .tree-list { padding: 0 0 0.25rem 0; }
+
+    /* folder toggle via <details>/<summary> */
+    .tree-list details > summary {
+      display: flex;
+      align-items: center;
+      padding: 0.3rem 0.75rem;
+      cursor: pointer;
+      color: var(--text-muted);
+      font-weight: 600;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      list-style: none;
+      user-select: none;
+      gap: 0.35rem;
+    }
+    .tree-list details > summary::-webkit-details-marker { display: none; }
+    .tree-list details > summary::before {
+      content: '▶';
+      font-size: 0.55rem;
+      flex-shrink: 0;
+      transition: transform 0.15s;
+      opacity: 0.6;
+    }
+    .tree-list details[open] > summary::before { transform: rotate(90deg); }
+    .tree-list details > summary:hover { color: var(--text); }
+
+    /* nested folder label (not top-level) */
+    .tree-list .tree-list details > summary {
+      font-weight: 500;
+      text-transform: none;
+      letter-spacing: 0;
+      font-size: 0.82rem;
+      padding-left: 0.75rem;
+    }
+
+    /* indent children */
+    .tree-list details > .tree-list { padding-left: 1rem; }
+
+    /* file link */
+    .tree-file a {
+      display: block;
+      padding: 0.27rem 0.75rem;
+      text-decoration: none;
+      color: var(--text-muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      transition: color 0.1s, background 0.1s;
+      border-left: 2px solid transparent;
+    }
+    .tree-file a:hover { color: var(--text); background: rgba(255,255,255,0.04); }
+    .tree-file a.active {
+      color: var(--accent);
+      background: var(--accent-dim);
+      border-left-color: var(--accent);
+      font-weight: 500;
+    }
+    /* indent nested file links */
+    .tree-list .tree-list .tree-file a { padding-left: 1.5rem; }
+    .tree-list .tree-list .tree-list .tree-file a { padding-left: 2.25rem; }
+
+    /* ── MAIN ── */
+    .main {
+      flex: 1;
+      overflow-y: auto;
+      padding: 2rem 2.5rem;
+    }
+    .main::-webkit-scrollbar { width: 6px; }
+    .main::-webkit-scrollbar-track { background: transparent; }
+    .main::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+    /* ── INDEX (home cards) ── */
+    .home-hero { margin-bottom: 2rem; }
+    .home-hero h1 { font-size: 1.4rem; color: #fff; font-weight: 700; margin-bottom: 0.3rem; }
+    .home-hero p { color: var(--text-muted); font-size: 0.88rem; }
 
     section { margin-bottom: 2rem; }
-
     .section-title {
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.08em;
       color: var(--text-muted);
-      margin-bottom: 0.75rem;
-      padding-bottom: 0.4rem;
+      margin-bottom: 0.65rem;
+      padding-bottom: 0.35rem;
       border-bottom: 1px solid var(--border);
     }
-
     .cards {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 0.75rem;
+      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+      gap: 0.6rem;
     }
-
     .card {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 6px;
-      padding: 0.9rem 1rem;
+      padding: 0.8rem 0.9rem;
       text-decoration: none;
       color: var(--text);
       display: flex;
       align-items: flex-start;
-      gap: 0.75rem;
+      gap: 0.65rem;
       transition: border-color 0.15s, background 0.15s;
     }
     .card:hover { border-color: var(--accent); background: #1a2232; }
-
-    .card-icon { font-size: 1.2rem; line-height: 1; flex-shrink: 0; margin-top: 2px; }
+    .card-icon { font-size: 1.1rem; line-height: 1; flex-shrink: 0; margin-top: 2px; }
     .card-body { min-width: 0; }
     .card-title {
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       font-weight: 600;
       color: var(--accent);
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
     }
-    .card-desc { font-size: 0.8rem; color: var(--text-muted); margin-top: 0.15rem; }
-
-    footer {
-      margin-top: 3rem;
-      font-size: 0.78rem;
-      color: var(--text-muted);
-      text-align: center;
-    }
-    footer a { color: var(--accent); text-decoration: none; }
+    .card-desc { font-size: 0.78rem; color: var(--text-muted); margin-top: 0.1rem; }
 
     /* ── VIEWER ── */
     #viewer-view { display: none; }
-
-    .viewer-nav {
+    .viewer-toolbar {
       display: flex;
-      align-items: center;
-      gap: 1rem;
-      margin-bottom: 2rem;
-      padding-bottom: 1rem;
+      justify-content: flex-end;
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.75rem;
       border-bottom: 1px solid var(--border);
-      flex-wrap: wrap;
     }
-    .viewer-nav a {
-      color: var(--accent);
-      text-decoration: none;
-      font-size: 0.85rem;
-    }
-    .viewer-nav a:hover { text-decoration: underline; }
-    .viewer-nav .spacer { flex: 1; }
-    #loading { color: var(--text-muted); font-size: 0.9rem; }
+    .viewer-toolbar a { color: var(--text-muted); text-decoration: none; font-size: 0.8rem; }
+    .viewer-toolbar a:hover { color: var(--accent); }
+    #loading { color: var(--text-muted); font-size: 0.9rem; padding: 2rem 0; }
 
     /* ── PROSE ── */
-    .prose { line-height: 1.75; }
+    .prose { line-height: 1.78; max-width: 820px; }
 
-    .prose h1, .prose h2, .prose h3, .prose h4, .prose h5 {
-      color: #fff;
+    .prose h1, .prose h2, .prose h3, .prose h4 {
+      color: #e6edf3;
       font-weight: 600;
-      margin: 1.75rem 0 0.75rem;
+      margin: 1.8rem 0 0.7rem;
       line-height: 1.3;
     }
-    .prose h1 { font-size: 1.9rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border); }
-    .prose h2 { font-size: 1.4rem; padding-bottom: 0.3rem; border-bottom: 1px solid var(--border); }
-    .prose h3 { font-size: 1.15rem; }
-    .prose h4 { font-size: 1rem; }
+    .prose h1:first-child, .prose h2:first-child { margin-top: 0; }
+    .prose h1 { font-size: 1.75rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border); }
+    .prose h2 { font-size: 1.35rem; padding-bottom: 0.3rem; border-bottom: 1px solid var(--border); }
+    .prose h3 { font-size: 1.1rem; }
+    .prose h4 { font-size: 0.95rem; color: var(--text); }
 
     .prose p { margin-bottom: 1rem; }
-
-    .prose ul, .prose ol { padding-left: 2rem; margin-bottom: 1rem; }
+    .prose ul, .prose ol { padding-left: 1.75rem; margin-bottom: 1rem; }
     .prose li { margin-bottom: 0.3rem; }
-    .prose li > ul, .prose li > ol { margin-bottom: 0; }
+    .prose li > ul, .prose li > ol { margin-bottom: 0.2rem; margin-top: 0.2rem; }
 
     .prose a { color: var(--accent); }
     .prose a:hover { text-decoration: underline; }
 
+    .prose strong { color: #e6edf3; }
+    .prose em { font-style: italic; }
+
     .prose code {
-      background: var(--surface);
+      background: var(--surface2);
       border: 1px solid var(--border);
       border-radius: 4px;
-      padding: 0.15em 0.4em;
-      font-size: 85%;
+      padding: 0.12em 0.4em;
+      font-size: 0.85em;
       font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
     }
 
     .prose pre {
       background: #010409;
       border: 1px solid var(--border);
-      border-radius: 6px;
+      border-radius: 8px;
       padding: 1rem 1.25rem;
       overflow-x: auto;
-      margin-bottom: 1rem;
+      margin-bottom: 1.25rem;
+      position: relative;
     }
     .prose pre code {
       background: transparent;
       border: none;
       padding: 0;
-      font-size: 0.88rem;
+      font-size: 0.875rem;
+      line-height: 1.6;
     }
 
     .prose blockquote {
@@ -160,329 +292,484 @@
       padding: 0.25rem 1rem;
       color: var(--text-muted);
       margin-bottom: 1rem;
+      font-style: italic;
     }
     .prose blockquote p { margin-bottom: 0; }
 
     .prose table {
       width: 100%;
       border-collapse: collapse;
-      margin-bottom: 1rem;
-      font-size: 0.9rem;
+      margin-bottom: 1.25rem;
+      font-size: 0.88rem;
       display: block;
       overflow-x: auto;
     }
     .prose th, .prose td {
       border: 1px solid var(--border);
-      padding: 0.5rem 0.75rem;
+      padding: 0.5rem 0.8rem;
       text-align: left;
     }
-    .prose th { background: var(--surface); font-weight: 600; color: #fff; }
-    .prose tr:nth-child(even) { background: rgba(255,255,255,0.03); }
+    .prose th { background: var(--surface2); font-weight: 600; color: #e6edf3; }
+    .prose tr:nth-child(even) td { background: rgba(255,255,255,0.02); }
 
     .prose hr { border: none; border-top: 1px solid var(--border); margin: 1.5rem 0; }
-    .prose img { max-width: 100%; height: auto; border-radius: 4px; }
+    .prose img { max-width: 100%; height: auto; border-radius: 6px; }
 
-    .prose strong { color: #fff; }
-    .prose em { color: #dbb882; }
+    /* ── MERMAID ── */
+    .mermaid-wrap {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin: 1.25rem 0;
+      text-align: center;
+      overflow-x: auto;
+    }
+    .mermaid-wrap svg { max-width: 100%; height: auto; }
+    .mermaid-error {
+      background: #200f0f;
+      border: 1px solid #6e2b2b;
+      border-radius: 6px;
+      padding: 0.75rem 1rem;
+      color: #f97b7b;
+      font-size: 0.83rem;
+      font-family: monospace;
+      margin: 1rem 0;
+    }
+
+    /* ── COPY BUTTON ── */
+    .code-wrap { position: relative; }
+    .copy-btn {
+      position: absolute;
+      top: 0.5rem;
+      right: 0.5rem;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--text-muted);
+      font-size: 0.72rem;
+      padding: 0.2rem 0.5rem;
+      cursor: pointer;
+      opacity: 0;
+      transition: opacity 0.15s;
+    }
+    .code-wrap:hover .copy-btn { opacity: 1; }
+    .copy-btn:hover { color: var(--text); }
+    .copy-btn.copied { color: #56d364; }
+
+    /* ── MOBILE ── */
+    @media (max-width: 767px) {
+      .menu-btn { display: block; }
+      .sidebar {
+        position: fixed;
+        top: var(--topbar-h);
+        left: calc(-1 * var(--sidebar-w));
+        height: calc(100vh - var(--topbar-h));
+        z-index: 200;
+        transition: left 0.25s ease;
+        box-shadow: 4px 0 20px rgba(0,0,0,0.5);
+      }
+      .sidebar.open { left: 0; }
+      .overlay.open { display: block; }
+      .main { padding: 1.5rem 1rem; }
+    }
+    @media (max-width: 540px) {
+      .cards { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
-<div class="container">
+<div class="app">
 
-  <!-- ════════════════════ INDEX VIEW ════════════════════ -->
-  <div id="index-view">
-    <header>
-      <h1>DSA Notes</h1>
-      <p>Data Structures &amp; Algorithms — theory, patterns, and problems &nbsp;·&nbsp;
-        <a href="https://github.com/vikash1a/data-structure-algorithm" target="_blank">View on GitHub</a>
-      </p>
-    </header>
+  <!-- ── TOP BAR ── -->
+  <header class="topbar">
+    <button class="menu-btn" id="menuBtn" aria-label="Toggle sidebar">&#9776;</button>
+    <a class="site-name" href="./">DSA Notes</a>
+    <span class="spacer"></span>
+    <a class="gh-link" href="https://github.com/vikash1a/data-structure-algorithm" target="_blank">GitHub ↗</a>
+  </header>
 
-    <section>
-      <div class="section-title">Searching</div>
-      <div class="cards">
-        <a class="card" href="?src=theory/01-searching/01-search-algo.md">
-          <span class="card-icon">🔍</span>
-          <div class="card-body">
-            <div class="card-title">Search Algorithms</div>
-            <div class="card-desc">Binary search, linear search, variants</div>
+  <div class="app-body">
+
+    <!-- ── SIDEBAR ── -->
+    <aside class="sidebar" id="sidebar">
+      <nav id="tree-nav"></nav>
+    </aside>
+    <div class="overlay" id="overlay"></div>
+
+    <!-- ── MAIN ── -->
+    <main class="main">
+
+      <!-- HOME / CARDS -->
+      <div id="index-view">
+        <div class="home-hero">
+          <h1>Data Structures &amp; Algorithms</h1>
+          <p>Theory notes, algorithm patterns, and problem lists</p>
+        </div>
+
+        <section>
+          <div class="section-title">Searching</div>
+          <div class="cards">
+            <a class="card" href="?src=theory/01-searching/01-search-algo.md">
+              <span class="card-icon">🔍</span>
+              <div class="card-body"><div class="card-title">Search Algorithms</div><div class="card-desc">Binary search, linear search, variants</div></div>
+            </a>
           </div>
-        </a>
+        </section>
+
+        <section>
+          <div class="section-title">Sorting</div>
+          <div class="cards">
+            <a class="card" href="?src=theory/02-sorting/01-sort-algo.md">
+              <span class="card-icon">📊</span>
+              <div class="card-body"><div class="card-title">Sort Algorithms</div><div class="card-desc">Merge, quick, heap, counting sort &amp; more</div></div>
+            </a>
+          </div>
+        </section>
+
+        <section>
+          <div class="section-title">Data Structures — Fundamentals</div>
+          <div class="cards">
+            <a class="card" href="?src=theory/03-data-structures-1/01-data-structure.md">
+              <span class="card-icon">🗂️</span>
+              <div class="card-body"><div class="card-title">Core Data Structures</div><div class="card-desc">Arrays, linked lists, stack, queue, hashing</div></div>
+            </a>
+            <a class="card" href="?src=theory/03-data-structures-1/02-heap.md">
+              <span class="card-icon">🏔️</span>
+              <div class="card-body"><div class="card-title">Heap</div><div class="card-desc">Min/max heap, priority queue operations</div></div>
+            </a>
+          </div>
+        </section>
+
+        <section>
+          <div class="section-title">Data Structures — Trees &amp; Graphs</div>
+          <div class="cards">
+            <a class="card" href="?src=theory/04-data-structures-2/01-tree.md">
+              <span class="card-icon">🌳</span>
+              <div class="card-body"><div class="card-title">Trees</div><div class="card-desc">Binary trees, traversals, properties</div></div>
+            </a>
+            <a class="card" href="?src=theory/04-data-structures-2/02-binary-search-tree.md">
+              <span class="card-icon">🔢</span>
+              <div class="card-body"><div class="card-title">Binary Search Tree</div><div class="card-desc">BST operations, insertion, deletion, search</div></div>
+            </a>
+            <a class="card" href="?src=theory/04-data-structures-2/03-graph/01-graph.md">
+              <span class="card-icon">🕸️</span>
+              <div class="card-body"><div class="card-title">Graph Fundamentals</div><div class="card-desc">Representation, BFS, DFS</div></div>
+            </a>
+            <a class="card" href="?src=theory/04-data-structures-2/03-graph/02-cycle-detection.md">
+              <span class="card-icon">🔄</span>
+              <div class="card-body"><div class="card-title">Cycle Detection</div><div class="card-desc">Directed &amp; undirected graph cycle detection</div></div>
+            </a>
+            <a class="card" href="?src=theory/04-data-structures-2/03-graph/03-topological-sort.md">
+              <span class="card-icon">↗️</span>
+              <div class="card-body"><div class="card-title">Topological Sort</div><div class="card-desc">DFS-based and Kahn's algorithm</div></div>
+            </a>
+            <a class="card" href="?src=theory/04-data-structures-2/03-graph/04-shortest-path.md">
+              <span class="card-icon">📍</span>
+              <div class="card-body"><div class="card-title">Shortest Path</div><div class="card-desc">Dijkstra, Bellman-Ford, Floyd-Warshall</div></div>
+            </a>
+            <a class="card" href="?src=theory/04-data-structures-2/03-graph/05-mst.md">
+              <span class="card-icon">🌲</span>
+              <div class="card-body"><div class="card-title">Minimum Spanning Tree</div><div class="card-desc">Prim's and Kruskal's algorithms</div></div>
+            </a>
+            <a class="card" href="?src=theory/04-data-structures-2/03-graph/06-kahns-algorithm.md">
+              <span class="card-icon">📋</span>
+              <div class="card-body"><div class="card-title">Kahn's Algorithm</div><div class="card-desc">BFS-based topological sort step-by-step</div></div>
+            </a>
+            <a class="card" href="?src=theory/04-data-structures-2/04-trie.md">
+              <span class="card-icon">🔤</span>
+              <div class="card-body"><div class="card-title">Trie</div><div class="card-desc">Prefix tree, insert, search, autocomplete</div></div>
+            </a>
+          </div>
+        </section>
+
+        <section>
+          <div class="section-title">Algorithms</div>
+          <div class="cards">
+            <a class="card" href="?src=theory/05-algo-1/01-backtracking.md">
+              <span class="card-icon">↩️</span>
+              <div class="card-body"><div class="card-title">Backtracking</div><div class="card-desc">Recursive exploration, pruning strategies</div></div>
+            </a>
+            <a class="card" href="?src=theory/05-algo-1/02-greedy.md">
+              <span class="card-icon">💰</span>
+              <div class="card-body"><div class="card-title">Greedy</div><div class="card-desc">Greedy choice property, activity selection</div></div>
+            </a>
+            <a class="card" href="?src=theory/05-algo-1/03-dp.md">
+              <span class="card-icon">🧩</span>
+              <div class="card-body"><div class="card-title">Dynamic Programming</div><div class="card-desc">Memoization, tabulation, classic DP patterns</div></div>
+            </a>
+          </div>
+        </section>
+
+        <section>
+          <div class="section-title">Algorithms — Advanced</div>
+          <div class="cards">
+            <a class="card" href="?src=theory/06-algo-2/01-bit-manipulation.md">
+              <span class="card-icon">⚙️</span>
+              <div class="card-body"><div class="card-title">Bit Manipulation</div><div class="card-desc">Bitwise ops, tricks &amp; common patterns</div></div>
+            </a>
+            <a class="card" href="?src=theory/06-algo-2/02-moore-voting-algo.md">
+              <span class="card-icon">🗳️</span>
+              <div class="card-body"><div class="card-title">Moore Voting Algorithm</div><div class="card-desc">Majority element in O(n) time O(1) space</div></div>
+            </a>
+          </div>
+        </section>
+
+        <section>
+          <div class="section-title">Patterns</div>
+          <div class="cards">
+            <a class="card" href="?src=theory/07-patterns/01-patterns.md">
+              <span class="card-icon">🎯</span>
+              <div class="card-body"><div class="card-title">Problem Patterns</div><div class="card-desc">Sliding window, two pointers, fast &amp; slow, islands…</div></div>
+            </a>
+          </div>
+        </section>
+
+        <section>
+          <div class="section-title">Other Notes</div>
+          <div class="cards">
+            <a class="card" href="?src=theory/08-other/01-cpp-stl.md">
+              <span class="card-icon">📦</span>
+              <div class="card-body"><div class="card-title">C++ STL</div><div class="card-desc">Containers, iterators, algorithms cheatsheet</div></div>
+            </a>
+            <a class="card" href="?src=theory/08-other/02-other-notes.md">
+              <span class="card-icon">📝</span>
+              <div class="card-body"><div class="card-title">Misc Notes</div><div class="card-desc">Random useful notes and references</div></div>
+            </a>
+          </div>
+        </section>
+
+        <section>
+          <div class="section-title">Problems &amp; Lists</div>
+          <div class="cards">
+            <a class="card" href="?src=problems/lists/leetcode-top-150.md">
+              <span class="card-icon">🏆</span>
+              <div class="card-body"><div class="card-title">LeetCode Top 150</div><div class="card-desc">Curated list of must-solve problems</div></div>
+            </a>
+            <a class="card" href="?src=problems/lists/pattern-problem-list.md">
+              <span class="card-icon">📌</span>
+              <div class="card-body"><div class="card-title">Pattern Problem List</div><div class="card-desc">Problems grouped by technique/pattern</div></div>
+            </a>
+            <a class="card" href="?src=problems/greedy/n-meeting-in-1-room/README.md">
+              <span class="card-icon">🤝</span>
+              <div class="card-body"><div class="card-title">N Meetings in One Room</div><div class="card-desc">Classic greedy scheduling problem</div></div>
+            </a>
+          </div>
+        </section>
+      </div><!-- /#index-view -->
+
+      <!-- MARKDOWN VIEWER -->
+      <div id="viewer-view">
+        <div class="viewer-toolbar">
+          <a id="gh-file-link" href="#" target="_blank">View on GitHub ↗</a>
+        </div>
+        <div id="loading">Loading…</div>
+        <article id="content" class="prose"></article>
       </div>
-    </section>
 
-    <section>
-      <div class="section-title">Sorting</div>
-      <div class="cards">
-        <a class="card" href="?src=theory/02-sorting/01-sort-algo.md">
-          <span class="card-icon">📊</span>
-          <div class="card-body">
-            <div class="card-title">Sort Algorithms</div>
-            <div class="card-desc">Merge, quick, heap, counting sort &amp; more</div>
-          </div>
-        </a>
-      </div>
-    </section>
-
-    <section>
-      <div class="section-title">Data Structures — Fundamentals</div>
-      <div class="cards">
-        <a class="card" href="?src=theory/03-data-structures-1/01-data-structure.md">
-          <span class="card-icon">🗂️</span>
-          <div class="card-body">
-            <div class="card-title">Core Data Structures</div>
-            <div class="card-desc">Arrays, linked lists, stack, queue, hashing</div>
-          </div>
-        </a>
-        <a class="card" href="?src=theory/03-data-structures-1/02-heap.md">
-          <span class="card-icon">🏔️</span>
-          <div class="card-body">
-            <div class="card-title">Heap</div>
-            <div class="card-desc">Min/max heap, priority queue operations</div>
-          </div>
-        </a>
-      </div>
-    </section>
-
-    <section>
-      <div class="section-title">Data Structures — Trees &amp; Graphs</div>
-      <div class="cards">
-        <a class="card" href="?src=theory/04-data-structures-2/01-tree.md">
-          <span class="card-icon">🌳</span>
-          <div class="card-body">
-            <div class="card-title">Trees</div>
-            <div class="card-desc">Binary trees, traversals, properties</div>
-          </div>
-        </a>
-        <a class="card" href="?src=theory/04-data-structures-2/02-binary-search-tree.md">
-          <span class="card-icon">🔢</span>
-          <div class="card-body">
-            <div class="card-title">Binary Search Tree</div>
-            <div class="card-desc">BST operations, insertion, deletion, search</div>
-          </div>
-        </a>
-        <a class="card" href="?src=theory/04-data-structures-2/03-graph/01-graph.md">
-          <span class="card-icon">🕸️</span>
-          <div class="card-body">
-            <div class="card-title">Graph Fundamentals</div>
-            <div class="card-desc">Representation, BFS, DFS</div>
-          </div>
-        </a>
-        <a class="card" href="?src=theory/04-data-structures-2/03-graph/02-cycle-detection.md">
-          <span class="card-icon">🔄</span>
-          <div class="card-body">
-            <div class="card-title">Cycle Detection</div>
-            <div class="card-desc">Directed &amp; undirected graph cycle detection</div>
-          </div>
-        </a>
-        <a class="card" href="?src=theory/04-data-structures-2/03-graph/03-topological-sort.md">
-          <span class="card-icon">↗️</span>
-          <div class="card-body">
-            <div class="card-title">Topological Sort</div>
-            <div class="card-desc">DFS-based and Kahn's algorithm</div>
-          </div>
-        </a>
-        <a class="card" href="?src=theory/04-data-structures-2/03-graph/04-shortest-path.md">
-          <span class="card-icon">📍</span>
-          <div class="card-body">
-            <div class="card-title">Shortest Path</div>
-            <div class="card-desc">Dijkstra, Bellman-Ford, Floyd-Warshall</div>
-          </div>
-        </a>
-        <a class="card" href="?src=theory/04-data-structures-2/03-graph/05-mst.md">
-          <span class="card-icon">🌲</span>
-          <div class="card-body">
-            <div class="card-title">Minimum Spanning Tree</div>
-            <div class="card-desc">Prim's and Kruskal's algorithms</div>
-          </div>
-        </a>
-        <a class="card" href="?src=theory/04-data-structures-2/03-graph/06-kahns-algorithm.md">
-          <span class="card-icon">📋</span>
-          <div class="card-body">
-            <div class="card-title">Kahn's Algorithm</div>
-            <div class="card-desc">BFS-based topological sort step-by-step</div>
-          </div>
-        </a>
-        <a class="card" href="?src=theory/04-data-structures-2/04-trie.md">
-          <span class="card-icon">🔤</span>
-          <div class="card-body">
-            <div class="card-title">Trie</div>
-            <div class="card-desc">Prefix tree, insert, search, autocomplete</div>
-          </div>
-        </a>
-      </div>
-    </section>
-
-    <section>
-      <div class="section-title">Algorithms</div>
-      <div class="cards">
-        <a class="card" href="?src=theory/05-algo-1/01-backtracking.md">
-          <span class="card-icon">↩️</span>
-          <div class="card-body">
-            <div class="card-title">Backtracking</div>
-            <div class="card-desc">Recursive exploration, pruning strategies</div>
-          </div>
-        </a>
-        <a class="card" href="?src=theory/05-algo-1/02-greedy.md">
-          <span class="card-icon">💰</span>
-          <div class="card-body">
-            <div class="card-title">Greedy</div>
-            <div class="card-desc">Greedy choice property, activity selection</div>
-          </div>
-        </a>
-        <a class="card" href="?src=theory/05-algo-1/03-dp.md">
-          <span class="card-icon">🧩</span>
-          <div class="card-body">
-            <div class="card-title">Dynamic Programming</div>
-            <div class="card-desc">Memoization, tabulation, classic DP patterns</div>
-          </div>
-        </a>
-      </div>
-    </section>
-
-    <section>
-      <div class="section-title">Algorithms — Advanced</div>
-      <div class="cards">
-        <a class="card" href="?src=theory/06-algo-2/01-bit-manipulation.md">
-          <span class="card-icon">⚙️</span>
-          <div class="card-body">
-            <div class="card-title">Bit Manipulation</div>
-            <div class="card-desc">Bitwise ops, tricks &amp; common patterns</div>
-          </div>
-        </a>
-        <a class="card" href="?src=theory/06-algo-2/02-moore-voting-algo.md">
-          <span class="card-icon">🗳️</span>
-          <div class="card-body">
-            <div class="card-title">Moore Voting Algorithm</div>
-            <div class="card-desc">Majority element in O(n) time O(1) space</div>
-          </div>
-        </a>
-      </div>
-    </section>
-
-    <section>
-      <div class="section-title">Patterns</div>
-      <div class="cards">
-        <a class="card" href="?src=theory/07-patterns/01-patterns.md">
-          <span class="card-icon">🎯</span>
-          <div class="card-body">
-            <div class="card-title">Problem Patterns</div>
-            <div class="card-desc">Sliding window, two pointers, fast &amp; slow, islands…</div>
-          </div>
-        </a>
-      </div>
-    </section>
-
-    <section>
-      <div class="section-title">Other Notes</div>
-      <div class="cards">
-        <a class="card" href="?src=theory/08-other/01-cpp-stl.md">
-          <span class="card-icon">📦</span>
-          <div class="card-body">
-            <div class="card-title">C++ STL</div>
-            <div class="card-desc">Containers, iterators, algorithms cheatsheet</div>
-          </div>
-        </a>
-        <a class="card" href="?src=theory/08-other/02-other-notes.md">
-          <span class="card-icon">📝</span>
-          <div class="card-body">
-            <div class="card-title">Misc Notes</div>
-            <div class="card-desc">Random useful notes and references</div>
-          </div>
-        </a>
-      </div>
-    </section>
-
-    <section>
-      <div class="section-title">Problems &amp; Lists</div>
-      <div class="cards">
-        <a class="card" href="?src=problems/lists/leetcode-top-150.md">
-          <span class="card-icon">🏆</span>
-          <div class="card-body">
-            <div class="card-title">LeetCode Top 150</div>
-            <div class="card-desc">Curated list of must-solve problems</div>
-          </div>
-        </a>
-        <a class="card" href="?src=problems/lists/pattern-problem-list.md">
-          <span class="card-icon">📌</span>
-          <div class="card-body">
-            <div class="card-title">Pattern Problem List</div>
-            <div class="card-desc">Problems grouped by technique/pattern</div>
-          </div>
-        </a>
-        <a class="card" href="?src=problems/greedy/n-meeting-in-1-room/README.md">
-          <span class="card-icon">🤝</span>
-          <div class="card-body">
-            <div class="card-title">N Meetings in One Room</div>
-            <div class="card-desc">Classic greedy scheduling problem</div>
-          </div>
-        </a>
-      </div>
-    </section>
-
-    <footer>
-      <a href="?src=README.md">README</a> &nbsp;·&nbsp;
-      <a href="https://github.com/vikash1a/data-structure-algorithm" target="_blank">GitHub</a>
-    </footer>
+    </main>
   </div>
-
-  <!-- ════════════════════ VIEWER VIEW ════════════════════ -->
-  <div id="viewer-view">
-    <nav class="viewer-nav">
-      <a href="./">← Index</a>
-      <span class="spacer"></span>
-      <a id="gh-link" href="#" target="_blank">View on GitHub ↗</a>
-    </nav>
-    <div id="loading">Loading…</div>
-    <article id="content" class="prose"></article>
-  </div>
-
 </div>
 
+<!-- ── SCRIPTS ── -->
 <script src="https://cdn.jsdelivr.net/npm/marked@9/marked.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
 <script>
-  const params = new URLSearchParams(location.search);
-  const src = params.get('src');
+(function () {
 
-  if (src) {
-    document.getElementById('index-view').style.display = 'none';
-    document.getElementById('viewer-view').style.display = 'block';
-    document.getElementById('gh-link').href =
-      'https://github.com/vikash1a/data-structure-algorithm/blob/master/' + src;
+  /* ── TREE DATA ── */
+  const TREE = [
+    { label: 'README', src: 'README.md' },
+    { label: 'Theory', children: [
+      { label: 'Searching', children: [
+        { label: 'Search Algorithms', src: 'theory/01-searching/01-search-algo.md' }
+      ]},
+      { label: 'Sorting', children: [
+        { label: 'Sort Algorithms', src: 'theory/02-sorting/01-sort-algo.md' }
+      ]},
+      { label: 'Data Structures I', children: [
+        { label: 'Core Data Structures', src: 'theory/03-data-structures-1/01-data-structure.md' },
+        { label: 'Heap',                 src: 'theory/03-data-structures-1/02-heap.md' }
+      ]},
+      { label: 'Data Structures II', children: [
+        { label: 'Trees',               src: 'theory/04-data-structures-2/01-tree.md' },
+        { label: 'Binary Search Tree',  src: 'theory/04-data-structures-2/02-binary-search-tree.md' },
+        { label: 'Graph', closed: true, children: [
+          { label: 'Graph Fundamentals', src: 'theory/04-data-structures-2/03-graph/01-graph.md' },
+          { label: 'Cycle Detection',    src: 'theory/04-data-structures-2/03-graph/02-cycle-detection.md' },
+          { label: 'Topological Sort',   src: 'theory/04-data-structures-2/03-graph/03-topological-sort.md' },
+          { label: 'Shortest Path',      src: 'theory/04-data-structures-2/03-graph/04-shortest-path.md' },
+          { label: 'MST',                src: 'theory/04-data-structures-2/03-graph/05-mst.md' },
+          { label: "Kahn's Algorithm",   src: 'theory/04-data-structures-2/03-graph/06-kahns-algorithm.md' }
+        ]},
+        { label: 'Trie', src: 'theory/04-data-structures-2/04-trie.md' }
+      ]},
+      { label: 'Algorithms I', closed: true, children: [
+        { label: 'Backtracking',        src: 'theory/05-algo-1/01-backtracking.md' },
+        { label: 'Greedy',             src: 'theory/05-algo-1/02-greedy.md' },
+        { label: 'Dynamic Programming', src: 'theory/05-algo-1/03-dp.md' }
+      ]},
+      { label: 'Algorithms II', closed: true, children: [
+        { label: 'Bit Manipulation', src: 'theory/06-algo-2/01-bit-manipulation.md' },
+        { label: 'Moore Voting',     src: 'theory/06-algo-2/02-moore-voting-algo.md' }
+      ]},
+      { label: 'Patterns', closed: true, children: [
+        { label: 'Problem Patterns', src: 'theory/07-patterns/01-patterns.md' }
+      ]},
+      { label: 'Other', closed: true, children: [
+        { label: 'C++ STL',     src: 'theory/08-other/01-cpp-stl.md' },
+        { label: 'Misc Notes',  src: 'theory/08-other/02-other-notes.md' }
+      ]}
+    ]},
+    { label: 'Problems', children: [
+      { label: 'Lists', children: [
+        { label: 'LeetCode Top 150',   src: 'problems/lists/leetcode-top-150.md' },
+        { label: 'Pattern Problems',   src: 'problems/lists/pattern-problem-list.md' }
+      ]},
+      { label: 'Greedy', closed: true, children: [
+        { label: 'N Meetings in One Room', src: 'problems/greedy/n-meeting-in-1-room/README.md' }
+      ]}
+    ]}
+  ];
 
-    fetch(src)
-      .then(r => {
-        if (!r.ok) throw new Error(r.status);
-        return r.text();
-      })
-      .then(text => {
-        document.getElementById('loading').style.display = 'none';
-        const content = document.getElementById('content');
-        content.innerHTML = marked.parse(text);
+  /* ── SIDEBAR TREE ── */
+  const currentSrc = new URLSearchParams(location.search).get('src') || '';
 
-        // page title from first heading or filename
-        const h1 = content.querySelector('h1');
-        document.title = (h1 ? h1.textContent : src.split('/').pop().replace('.md','')) + ' — DSA Notes';
-
-        // syntax highlighting
-        content.querySelectorAll('pre code').forEach(el => hljs.highlightElement(el));
-
-        // rewrite relative .md links to use ?src=
-        const base = src.split('/').slice(0, -1).join('/');
-        content.querySelectorAll('a[href]').forEach(a => {
-          const href = a.getAttribute('href');
-          if (!href || href.startsWith('http') || href.startsWith('#')) return;
-          if (href.endsWith('.md')) {
-            const resolved = base ? base + '/' + href : href;
-            a.href = '?src=' + resolved;
-          }
-        });
-      })
-      .catch(() => {
-        document.getElementById('loading').textContent = 'Failed to load file.';
-      });
+  function hasActive(node) {
+    if (node.src) return node.src === currentSrc;
+    return node.children ? node.children.some(hasActive) : false;
   }
+
+  function buildTree(nodes) {
+    const ul = document.createElement('ul');
+    ul.className = 'tree-list';
+    nodes.forEach(node => {
+      const li = document.createElement('li');
+      if (node.src) {
+        li.className = 'tree-file';
+        const a = document.createElement('a');
+        a.href = '?src=' + node.src;
+        a.textContent = node.label;
+        if (node.src === currentSrc) a.className = 'active';
+        li.appendChild(a);
+      } else {
+        const details = document.createElement('details');
+        const open = !node.closed || hasActive(node);
+        if (open) details.open = true;
+        const summary = document.createElement('summary');
+        summary.textContent = node.label;
+        details.appendChild(summary);
+        details.appendChild(buildTree(node.children));
+        li.appendChild(details);
+      }
+      ul.appendChild(li);
+    });
+    return ul;
+  }
+
+  document.getElementById('tree-nav').appendChild(buildTree(TREE));
+
+  /* ── MOBILE SIDEBAR ── */
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('overlay');
+  const menuBtn = document.getElementById('menuBtn');
+
+  menuBtn.addEventListener('click', () => {
+    sidebar.classList.toggle('open');
+    overlay.classList.toggle('open');
+  });
+  overlay.addEventListener('click', () => {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('open');
+  });
+
+  /* ── VIEWER ── */
+  if (!currentSrc) return;
+
+  document.getElementById('index-view').style.display = 'none';
+  document.getElementById('viewer-view').style.display = 'block';
+  document.getElementById('gh-file-link').href =
+    'https://github.com/vikash1a/data-structure-algorithm/blob/master/' + currentSrc;
+
+  mermaid.initialize({
+    startOnLoad: false,
+    theme: 'dark',
+    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
+    themeVariables: { fontSize: '14px' }
+  });
+
+  fetch(currentSrc)
+    .then(r => { if (!r.ok) throw new Error(r.status); return r.text(); })
+    .then(async text => {
+      document.getElementById('loading').style.display = 'none';
+      const content = document.getElementById('content');
+      content.innerHTML = marked.parse(text);
+
+      // page title
+      const h1 = content.querySelector('h1');
+      document.title = (h1 ? h1.textContent.trim() : currentSrc.split('/').pop().replace('.md', '')) + ' — DSA Notes';
+
+      // syntax highlight (skip mermaid blocks)
+      content.querySelectorAll('pre code:not(.language-mermaid)').forEach(el => {
+        // wrap pre for copy button
+        const pre = el.parentElement;
+        const wrap = document.createElement('div');
+        wrap.className = 'code-wrap';
+        pre.parentNode.insertBefore(wrap, pre);
+        wrap.appendChild(pre);
+
+        // copy button
+        const btn = document.createElement('button');
+        btn.className = 'copy-btn';
+        btn.textContent = 'copy';
+        btn.addEventListener('click', () => {
+          navigator.clipboard.writeText(el.textContent).then(() => {
+            btn.textContent = 'copied!';
+            btn.classList.add('copied');
+            setTimeout(() => { btn.textContent = 'copy'; btn.classList.remove('copied'); }, 1800);
+          });
+        });
+        wrap.appendChild(btn);
+
+        hljs.highlightElement(el);
+      });
+
+      // mermaid diagrams
+      const mermaidEls = [...content.querySelectorAll('code.language-mermaid')];
+      for (let i = 0; i < mermaidEls.length; i++) {
+        const el = mermaidEls[i];
+        const pre = el.parentElement;
+        try {
+          const { svg, bindFunctions } = await mermaid.render('mermaid-' + i, el.textContent.trim());
+          const div = document.createElement('div');
+          div.className = 'mermaid-wrap';
+          div.innerHTML = svg;
+          if (bindFunctions) bindFunctions(div);
+          pre.replaceWith(div);
+        } catch (err) {
+          const div = document.createElement('div');
+          div.className = 'mermaid-error';
+          div.textContent = 'Mermaid parse error: ' + err.message;
+          pre.replaceWith(div);
+        }
+      }
+
+      // rewrite relative .md links
+      const base = currentSrc.split('/').slice(0, -1).join('/');
+      content.querySelectorAll('a[href]').forEach(a => {
+        const href = a.getAttribute('href');
+        if (!href || href.startsWith('http') || href.startsWith('#')) return;
+        if (href.endsWith('.md')) {
+          a.href = '?src=' + (base ? base + '/' + href : href);
+        }
+      });
+    })
+    .catch(() => {
+      document.getElementById('loading').textContent = 'Could not load: ' + currentSrc;
+    });
+
+})();
 </script>
 </body>
 </html>
