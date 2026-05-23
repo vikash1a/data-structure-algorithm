@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DSA Notes</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0d1117;
+      --surface: #161b22;
+      --border: #30363d;
+      --accent: #58a6ff;
+      --accent-dim: #1f3f6e;
+      --text: #c9d1d9;
+      --text-muted: #8b949e;
+      --tag-bg: #21262d;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      line-height: 1.6;
+      padding: 2rem 1rem;
+    }
+
+    .container { max-width: 900px; margin: 0 auto; }
+
+    header { margin-bottom: 2.5rem; }
+    header h1 { font-size: 1.8rem; font-weight: 700; color: #fff; }
+    header p { color: var(--text-muted); margin-top: 0.4rem; }
+    header a { color: var(--accent); text-decoration: none; font-size: 0.85rem; }
+    header a:hover { text-decoration: underline; }
+
+    section { margin-bottom: 2rem; }
+
+    .section-title {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.4rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 0.75rem;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.9rem 1rem;
+      text-decoration: none;
+      color: var(--text);
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      transition: border-color 0.15s, background 0.15s;
+    }
+    .card:hover {
+      border-color: var(--accent);
+      background: #1a2232;
+    }
+
+    .card-icon {
+      font-size: 1.2rem;
+      line-height: 1;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .card-body { min-width: 0; }
+    .card-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--accent);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .card-desc {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 0.15rem;
+    }
+
+    footer {
+      margin-top: 3rem;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      text-align: center;
+    }
+    footer a { color: var(--accent); text-decoration: none; }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <h1>DSA Notes</h1>
+    <p>Data Structures &amp; Algorithms — theory, patterns, and problems &nbsp;·&nbsp;
+      <a href="https://github.com/vikash1a/data-structure-algorithm" target="_blank">View on GitHub</a>
+    </p>
+  </header>
+
+  <!-- SEARCHING -->
+  <section>
+    <div class="section-title">Searching</div>
+    <div class="cards">
+      <a class="card" href="theory/01-searching/01-search-algo.md">
+        <span class="card-icon">🔍</span>
+        <div class="card-body">
+          <div class="card-title">Search Algorithms</div>
+          <div class="card-desc">Binary search, linear search, variants</div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- SORTING -->
+  <section>
+    <div class="section-title">Sorting</div>
+    <div class="cards">
+      <a class="card" href="theory/02-sorting/01-sort-algo.md">
+        <span class="card-icon">📊</span>
+        <div class="card-body">
+          <div class="card-title">Sort Algorithms</div>
+          <div class="card-desc">Merge, quick, heap, counting sort &amp; more</div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- DATA STRUCTURES 1 -->
+  <section>
+    <div class="section-title">Data Structures — Fundamentals</div>
+    <div class="cards">
+      <a class="card" href="theory/03-data-structures-1/01-data-structure.md">
+        <span class="card-icon">🗂️</span>
+        <div class="card-body">
+          <div class="card-title">Core Data Structures</div>
+          <div class="card-desc">Arrays, linked lists, stack, queue, hashing</div>
+        </div>
+      </a>
+      <a class="card" href="theory/03-data-structures-1/02-heap.md">
+        <span class="card-icon">🏔️</span>
+        <div class="card-body">
+          <div class="card-title">Heap</div>
+          <div class="card-desc">Min/max heap, priority queue operations</div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- DATA STRUCTURES 2 -->
+  <section>
+    <div class="section-title">Data Structures — Trees &amp; Graphs</div>
+    <div class="cards">
+      <a class="card" href="theory/04-data-structures-2/01-tree.md">
+        <span class="card-icon">🌳</span>
+        <div class="card-body">
+          <div class="card-title">Trees</div>
+          <div class="card-desc">Binary trees, traversals, properties</div>
+        </div>
+      </a>
+      <a class="card" href="theory/04-data-structures-2/02-binary-search-tree.md">
+        <span class="card-icon">🔢</span>
+        <div class="card-body">
+          <div class="card-title">Binary Search Tree</div>
+          <div class="card-desc">BST operations, insertion, deletion, search</div>
+        </div>
+      </a>
+      <a class="card" href="theory/04-data-structures-2/03-graph/01-graph.md">
+        <span class="card-icon">🕸️</span>
+        <div class="card-body">
+          <div class="card-title">Graph Fundamentals</div>
+          <div class="card-desc">Representation, BFS, DFS</div>
+        </div>
+      </a>
+      <a class="card" href="theory/04-data-structures-2/03-graph/02-cycle-detection.md">
+        <span class="card-icon">🔄</span>
+        <div class="card-body">
+          <div class="card-title">Cycle Detection</div>
+          <div class="card-desc">Directed &amp; undirected graph cycle detection</div>
+        </div>
+      </a>
+      <a class="card" href="theory/04-data-structures-2/03-graph/03-topological-sort.md">
+        <span class="card-icon">↗️</span>
+        <div class="card-body">
+          <div class="card-title">Topological Sort</div>
+          <div class="card-desc">DFS-based and Kahn's algorithm</div>
+        </div>
+      </a>
+      <a class="card" href="theory/04-data-structures-2/03-graph/04-shortest-path.md">
+        <span class="card-icon">📍</span>
+        <div class="card-body">
+          <div class="card-title">Shortest Path</div>
+          <div class="card-desc">Dijkstra, Bellman-Ford, Floyd-Warshall</div>
+        </div>
+      </a>
+      <a class="card" href="theory/04-data-structures-2/03-graph/05-mst.md">
+        <span class="card-icon">🌲</span>
+        <div class="card-body">
+          <div class="card-title">Minimum Spanning Tree</div>
+          <div class="card-desc">Prim's and Kruskal's algorithms</div>
+        </div>
+      </a>
+      <a class="card" href="theory/04-data-structures-2/03-graph/06-kahns-algorithm.md">
+        <span class="card-icon">📋</span>
+        <div class="card-body">
+          <div class="card-title">Kahn's Algorithm</div>
+          <div class="card-desc">BFS-based topological sort step-by-step</div>
+        </div>
+      </a>
+      <a class="card" href="theory/04-data-structures-2/04-trie.md">
+        <span class="card-icon">🔤</span>
+        <div class="card-body">
+          <div class="card-title">Trie</div>
+          <div class="card-desc">Prefix tree, insert, search, autocomplete</div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- ALGORITHMS 1 -->
+  <section>
+    <div class="section-title">Algorithms</div>
+    <div class="cards">
+      <a class="card" href="theory/05-algo-1/01-backtracking.md">
+        <span class="card-icon">↩️</span>
+        <div class="card-body">
+          <div class="card-title">Backtracking</div>
+          <div class="card-desc">Recursive exploration, pruning strategies</div>
+        </div>
+      </a>
+      <a class="card" href="theory/05-algo-1/02-greedy.md">
+        <span class="card-icon">💰</span>
+        <div class="card-body">
+          <div class="card-title">Greedy</div>
+          <div class="card-desc">Greedy choice property, activity selection</div>
+        </div>
+      </a>
+      <a class="card" href="theory/05-algo-1/03-dp.md">
+        <span class="card-icon">🧩</span>
+        <div class="card-body">
+          <div class="card-title">Dynamic Programming</div>
+          <div class="card-desc">Memoization, tabulation, classic DP patterns</div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- ALGORITHMS 2 -->
+  <section>
+    <div class="section-title">Algorithms — Advanced</div>
+    <div class="cards">
+      <a class="card" href="theory/06-algo-2/01-bit-manipulation.md">
+        <span class="card-icon">⚙️</span>
+        <div class="card-body">
+          <div class="card-title">Bit Manipulation</div>
+          <div class="card-desc">Bitwise ops, tricks &amp; common patterns</div>
+        </div>
+      </a>
+      <a class="card" href="theory/06-algo-2/02-moore-voting-algo.md">
+        <span class="card-icon">🗳️</span>
+        <div class="card-body">
+          <div class="card-title">Moore Voting Algorithm</div>
+          <div class="card-desc">Majority element in O(n) time O(1) space</div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- PATTERNS -->
+  <section>
+    <div class="section-title">Patterns</div>
+    <div class="cards">
+      <a class="card" href="theory/07-patterns/01-patterns.md">
+        <span class="card-icon">🎯</span>
+        <div class="card-body">
+          <div class="card-title">Problem Patterns</div>
+          <div class="card-desc">Sliding window, two pointers, fast &amp; slow, islands…</div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- OTHER -->
+  <section>
+    <div class="section-title">Other Notes</div>
+    <div class="cards">
+      <a class="card" href="theory/08-other/01-cpp-stl.md">
+        <span class="card-icon">📦</span>
+        <div class="card-body">
+          <div class="card-title">C++ STL</div>
+          <div class="card-desc">Containers, iterators, algorithms cheatsheet</div>
+        </div>
+      </a>
+      <a class="card" href="theory/08-other/02-other-notes.md">
+        <span class="card-icon">📝</span>
+        <div class="card-body">
+          <div class="card-title">Misc Notes</div>
+          <div class="card-desc">Random useful notes and references</div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- PROBLEMS -->
+  <section>
+    <div class="section-title">Problems &amp; Lists</div>
+    <div class="cards">
+      <a class="card" href="problems/lists/leetcode-top-150.md">
+        <span class="card-icon">🏆</span>
+        <div class="card-body">
+          <div class="card-title">LeetCode Top 150</div>
+          <div class="card-desc">Curated list of must-solve problems</div>
+        </div>
+      </a>
+      <a class="card" href="problems/lists/pattern-problem-list.md">
+        <span class="card-icon">📌</span>
+        <div class="card-body">
+          <div class="card-title">Pattern Problem List</div>
+          <div class="card-desc">Problems grouped by technique/pattern</div>
+        </div>
+      </a>
+      <a class="card" href="problems/greedy/n-meeting-in-1-room/README.md">
+        <span class="card-icon">🤝</span>
+        <div class="card-body">
+          <div class="card-title">N Meetings in One Room</div>
+          <div class="card-desc">Classic greedy scheduling problem</div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <footer>
+    <a href="README.md">README</a> &nbsp;·&nbsp;
+    <a href="https://github.com/vikash1a/data-structure-algorithm" target="_blank">GitHub</a>
+  </footer>
+
+</div>
+</body>
+</html>
