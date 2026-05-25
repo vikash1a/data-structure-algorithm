@@ -7,17 +7,6 @@
 
 ```
 .
-├── implementation/          # C++ implementations by topic
-│   ├── binary-search.cpp
-│   ├── bit-manipulation.cpp
-│   ├── heap.cpp
-│   ├── linked-list.cpp
-│   ├── stack.cpp
-│   ├── trie.cpp
-│   ├── graph/               # dijkstra, kruskal, prims, floyd-marshall, etc.
-│   ├── sorting/             # merge-sort, quick-sort, heap-sort
-│   └── tree/                # binary-tree, bst
-│
 ├── theory/                  # Notes and explanations by topic
 │   ├── 01-searching/
 │   │   └── 01-search-algo.md
@@ -43,7 +32,8 @@
 │   │   └── 03-dp.md
 │   ├── 06-algo-2/
 │   │   ├── 01-bit-manipulation.md
-│   │   └── 02-moore-voting-algo.md
+│   │   ├── 02-moore-voting-algo.md
+│   │   └── 03-kadane-algo.md
 │   ├── 07-patterns/
 │   │   └── 01-patterns.md
 │   ├── 08-other/
@@ -52,6 +42,16 @@
 │   └── media/               # Images referenced by notes
 │
 ├── problems/                # Practice problems by topic
+│   ├── data-structure/      # C++ implementations by topic
+│   │   ├── binary-search.cpp
+│   │   ├── bit-manipulation.cpp
+│   │   ├── heap.cpp
+│   │   ├── linked-list.cpp
+│   │   ├── stack.cpp
+│   │   ├── trie.cpp
+│   │   ├── graph/           # dijkstra, kruskal, prims, floyd-marshall, etc.
+│   │   ├── sorting/         # merge-sort, quick-sort, heap-sort
+│   │   └── tree/            # binary-tree, bst
 │   ├── greedy/
 │   │   └── n-meeting-in-1-room/
 │   └── lists/               # Problem tracking lists
@@ -71,7 +71,7 @@ g++ scratch/playground.cpp -o scratch/playground && ./scratch/playground
 Or for any implementation file:
 
 ```bash
-g++ implementation/graph/dijkstra.cpp -o implementation/graph/dijkstra && ./implementation/graph/dijkstra
+g++ problems/data-structure/graph/dijkstra.cpp -o /tmp/dijkstra && /tmp/dijkstra
 ```
 
 ## To Do
