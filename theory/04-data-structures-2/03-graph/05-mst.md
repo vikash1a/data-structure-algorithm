@@ -98,19 +98,82 @@ for each edge (u, v, w) in sorted order:
 
 Data structure used by Kruskal's to track which vertices are in the same component and detect cycles in near-constant time.
 
-### Find — with path compression
+Two operations:
+- **find(x)** — returns the root (representative) of x's component
+- **union(x, y)** — merges the components of x and y
 
-Finds the root of the component. Path compression makes all nodes on the path point directly to the root, flattening the tree for future queries.
+### Step-by-step trace — Kruskal's on the example graph
+
+Edges processed in order: A-B(1), B-D(1), C-D(2), A-C(3)
+
+**Initial — each node is its own component:**
+
+```mermaid
+flowchart LR
+    A((A)) & B((B)) & C((C)) & D((D))
+```
+`parent: A→A  B→B  C→C  D→D`
+
+---
+
+**union(A, B)** — find(A)=A, find(B)=B → different → merge, A becomes root:
 
 ```mermaid
 flowchart TD
-    subgraph before["Before path compression"]
-        r1((root)) --> a1((a)) --> b1((b)) --> c1((c))
+    A1((A)) --> B1((B))
+    C1((C))
+    D1((D))
+```
+`parent: A→A  B→A  C→C  D→D`
+
+---
+
+**union(B, D)** — find(B)→A, find(D)=D → different → D joins A's tree:
+
+```mermaid
+flowchart TD
+    A2((A)) --> B2((B)) & D2((D))
+    C2((C))
+```
+`parent: A→A  B→A  C→C  D→A`
+
+---
+
+**union(C, D)** — find(C)=C, find(D)→A → different → C joins A's tree:
+
+```mermaid
+flowchart TD
+    A3((A)) --> B3((B)) & D3((D)) & C3((C))
+```
+`parent: A→A  B→A  C→A  D→A`
+
+---
+
+**check A-C(3)** — find(A)=A, find(C)→A → **same root → cycle! skip.**
+
+| Edge | find(u) | find(v) | Same? | Action |
+|------|---------|---------|-------|--------|
+| A-B(1) | A | B | no | union → add to MST |
+| B-D(1) | A | D | no | union → add to MST |
+| C-D(2) | C | A | no | union → add to MST |
+| A-C(3) | A | A | **yes** | **skip — cycle** |
+
+---
+
+### Path Compression
+
+Without compression, `find` walks up the chain on every call. Path compression makes every node on the path point directly to the root — flattening the tree permanently.
+
+```mermaid
+flowchart LR
+    subgraph before["Before find(D)"]
+        r1((A)) --> a1((B)) --> b1((D))
     end
-    subgraph after["After find(c) — path compression"]
-        r2((root)) --> a2((a)) & b2((b)) & c2((c))
+    subgraph after["After find(D) — D now points to A directly"]
+        r2((A)) --> a2((B))
+        r2 --> b2((D))
     end
-    before -->|"find(c)"| after
+    before -->|"find(D)"| after
 ```
 
 ```
@@ -120,9 +183,24 @@ find(x):
     return parent[x]
 ```
 
-### Union — by rank
+### Union by Rank
 
-Attaches the shorter tree under the taller one to keep the structure flat.
+Attaches the shorter tree under the taller one. Without this, repeated unions could produce a linked list (O(n) find).
+
+```mermaid
+flowchart LR
+    subgraph small["rank 1"]
+        s1((X)) --> s2((Y))
+    end
+    subgraph large["rank 2"]
+        l1((P)) --> l2((Q)) & l3((R))
+    end
+    subgraph result["After union — small under large"]
+        r1((P)) --> r2((Q)) & r3((R)) & r4((X))
+        r4 --> r5((Y))
+    end
+    small & large -->|"union(X,P)"| result
+```
 
 ```
 union(x, y):
@@ -131,6 +209,33 @@ union(x, y):
     if rank[px] < rank[py]: swap(px, py)
     parent[py] = px
     if rank[px] == rank[py]: rank[px]++
+```
+
+### Implementation
+
+```cpp
+struct UnionFind {
+    vector<int> parent, rank;
+
+    UnionFind(int n) : parent(n), rank(n, 0) {
+        iota(parent.begin(), parent.end(), 0);  // parent[i] = i
+    }
+
+    int find(int x) {
+        if (parent[x] != x)
+            parent[x] = find(parent[x]);  // path compression
+        return parent[x];
+    }
+
+    bool unite(int x, int y) {
+        int px = find(x), py = find(y);
+        if (px == py) return false;        // same component → cycle
+        if (rank[px] < rank[py]) swap(px, py);
+        parent[py] = px;
+        if (rank[px] == rank[py]) rank[px]++;
+        return true;
+    }
+};
 ```
 
 **Time:** O(α(n)) ≈ O(1) per operation — α is the inverse Ackermann function, effectively constant for all practical inputs.
