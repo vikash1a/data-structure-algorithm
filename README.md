@@ -1,11 +1,12 @@
 # Data Structures & Algorithms
 
 ## Resources
+
 [github.com/ashishps1/awesome-leetcode-resources](https://github.com/ashishps1/awesome-leetcode-resources)
 
 ## Structure
 
-```
+```text
 .
 ├── theory/                  # Notes and explanations by topic
 │   ├── 01-searching/
@@ -73,12 +74,3 @@ Or for any implementation file:
 ```bash
 g++ problems/data-structure/graph/dijkstra.cpp -o /tmp/dijkstra && /tmp/dijkstra
 ```
-
-## To Do
-- [ ] https://www.geeksforgeeks.org/kmp-algorithm-for-pattern-searching/
-- [ ] Sweeping Line Algorithm
-- [ ] Kadane algo
-- [ ] Practice c++ list stl
-
-## Problem Solving Log
-- [X] binary search in c++, lower_bound & upper_bound — [reference](https://leetcode.com/problems/most-profit-assigning-work/solutions/5328902/most-profit-assigning-work/)
