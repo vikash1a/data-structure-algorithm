@@ -1,1 +1,1 @@
-* Binary Indexed Tree (Fenwick Tree) or a Segment Tree
+* [ ] Binary Indexed Tree (Fenwick Tree) or a Segment Tree
